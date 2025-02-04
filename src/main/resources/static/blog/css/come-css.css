@@ -1,0 +1,72 @@
+
+h1 {
+    font-size: clamp(24px, 4vw, 48px); /* Min: 24px, Preferred: 4vw, Max: 48px */
+}
+h2 {
+    font-size: clamp(20px, 3vw, 36px); /* Min: 20px, Preferred: 3vw, Max: 36px */
+}
+h3 {
+    font-size: clamp(15px, 1.3vw, 30px); /* Min: 18px, Preferred: 2.5vw, Max: 30px */
+}
+
+button {
+    font-size: clamp(12px, 1.5vw, 16px); /* Min: 12px, Preferred: 1.5vw, Max: 16px */
+}
+p {
+    font-size: clamp(14px, 1.8vw, 17px); /* Min: 14px, Preferred: 1.8vw, Max: 20px */
+}
+.navbar-light .navbar-brand {
+    color: #fff;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show > .nav-link {
+    color: #f3f3f3;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color:#f3f3f3 !important;
+}
+
+.navbar-toggler {
+    background:  #f3f3f3;
+}
+
+.navbar-nav {
+    text-align: center;
+}
+
+.nav-link {
+    padding: .2rem 1rem;
+}
+
+.nav-link.active,.nav-link:focus{
+    color:  #f3f3f3;
+}
+
+.navbar-toggler {
+    padding: 1px 5px;
+    font-size: 18px;
+    line-height: 0.3;
+}
+.navbar {
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.navbar.scrolled {
+    background-color: #131313;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+    color: #f3f3f3;
+}
+.snow{
+    position: absolute;
+}
+.container-contact-us{
+    margin-top: 5rem;
+}

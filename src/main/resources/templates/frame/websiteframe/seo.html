@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<th:block th:fragment="seo">
+
+<!--  bootstrap -->
+
+  <!-- Character encoding for proper rendering -->
+  <meta charset="UTF-8">
+  <!-- Ensures proper scaling and responsiveness on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Specifies the page title -->
+  <title>Historia Zetu - Echoes of Our Lives</title>
+  <!-- Favicon -->
+  <!-- Primary description for search engines -->
+  <meta name="description" content="Explore captivating stories that resonate deeply, echoing life’s precious moments and shared experiences.">
+
+  <!-- Keywords (optional for modern SEO but still used in some contexts) -->
+  <meta name="keywords" content="Historia Zetu, Stories, Life, Culture, Experiences, Blogs">
+
+  <!-- Author name -->
+  <meta name="author" content="Kasereka michael">
+
+  <!-- Author email -->
+  <meta name="email" content="Kaserekamichael23526@gmail.com">
+
+  <!-- Robots directive (default is index, follow; add if specific pages need special instructions) -->
+  <meta name="robots" content="index, follow">
+
+  <!-- Canonical URL to avoid duplicate content issues -->
+  <link rel="canonical" href="https://www.example.com/your-page">
+
+  <!-- Open Graph meta tags for better social media sharing -->
+  <meta property="og:title" content="Historia Zetu - Echoes of Our Lives">
+  <meta property="og:description" content="Explore captivating stories that resonate deeply, echoing life’s precious moments and shared experiences.">
+  <meta property="og:image" content="https://www.example.com/images/og-image.jpg">
+  <meta property="og:url" content="https://www.example.com/your-page">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Historia Zetu - Echoes of Our Lives">
+  <meta name="twitter:description" content="Explore captivating stories that resonate deeply, echoing life’s precious moments and shared experiences.">
+  <meta name="twitter:image" content="https://www.example.com/images/twitter-image.jpg">
+
+  <!-- Internet Explorer compatibility -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="">
+
+  <link rel="icon" type="image/x-icon" th:href="@{/dashboard/img/favicon.ico}"/>
+  <!-- iOS scaling -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Theme color for browsers -->
+  <meta name="theme-color" content="#0000">
+
+  <!-- Content Security Policy -->
+<!--  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">-->
+
+  <!-- Prevent Clickjacking -->
+  <meta http-equiv="x-ua-compatible" content="DENY">
+
+  <!-- XSS Protection -->
+  <meta http-equiv="x-ua-compatible" content="1; mode=block">
+
+  <!-- Referrer Policy -->
+  <meta name="referrer" content="no-referrer">
+
+</th:block>
+
+</body>
+</html>

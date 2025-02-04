@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include SEO -->
+    <div th:replace="frame/websiteframe/seo :: seo"></div>
+
+    <title>Historia Zetu | about us</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Preload styles -->
+    <link rel="stylesheet" th:href="@{/blog/css/come-css.css}" as="style" type="text/css" >
+    <link rel="stylesheet" th:href="@{/blog/css/about.css}" as="style" type="text/css">
+
+</head>
+
+<body class="d-flex flex-column" style="background-color: #000000; background-image: url('/blog/images/1.webp'); background-repeat: no-repeat; overflow-y: scroll; overflow-x:hidden;  background-size: cover;font-size: clamp(12px, 2vw, 16px);">
+<!-- Navbar -->
+<div th:replace="frame/websiteframe/navbar :: website-navbar"></div>
+
+<!-- about us -->
+<div class="main d-flex flex-column mt-5">
+
+    <div class="main-section container py-5 text-light d-flex flex-wrap justify-content-between align-items-start">
+        <!-- About Us Section -->
+        <div class="about-us col-md-6 mb-4">
+            <h1 class="mb-4">À propos de nous</h1>
+            <p class="mb-3">
+                Au cœur du Nord-Kivu, où la souffrance est devenue un compagnon obsédant pour son peuple, une lueur d'espoir s'est allumée en nous, Michael Kasereka, un ingénieur passionné en informatique. Témoin des épreuves implacables endurées par les innocents - enfants, aînés et femmes - nous ne pouvions plus supporter le poids du silence.
+            </p>
+            <p class="mb-3">
+                Alors que nous contemplions les visages résilients marqués par les cicatrices d'histoires non racontées, une idée captivante a émergé. Pourquoi ne pas créer une plateforme où les voix de ceux qui vivent cette angoisse pourraient résonner à travers le monde ?
+            </p>
+            <p class="mb-3">
+                Dans les heures de réflexion faiblement éclairées, nous avons partagé notre rêve avec Aubin Mukoni, un professionnel talentueux derrière l'objectif. Ensemble, alimentés par un sentiment de but commun, nous avons entrepris un voyage pour dévoiler les vérités cachées du Nord-Kivu, pour susciter l'empathie et pour déclencher l'action là où régnait autrefois l'apathie.
+            </p>
+            <a th:href="@{/}" class="btn btn-outline-light mt-4">See More Stories</a>
+        </div>
+
+        <!-- Profile Cards Section -->
+
+        <div class="profile-social col-md-6 d-flex justify-content-center">
+            <div class="profile-card d-flex  justify-content-center">
+                <!-- Card 1 -->
+                <div class="card bg-dark border-0 shadow-lg" style="width: 14rem;">
+                    <img loading="lazy" src="https://lh3.googleusercontent.com/a/ACg8ocKAqTEOBhjwm1dVx9kyE0TL1BMt8EiWULB7XF07zFcoh5hP3usU=s96-c-rg-br100" class="card-img-top" alt="Kasereka Michael">
+                    <div class="card-body text-center">
+                        <h5 class="mb-2 text-light">Kasereka Michael</h5>
+                        <h6 class="text-secondary mb-3">Back-end Developer</h6>
+                        <a th:href="@{/}" class="btn btn-outline-light btn-sm">Know More</a>
+                    </div>
+                    <div class="dock-container text-center mt-3">
+                        <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-github"></ion-icon></a>
+                        <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-instagram"></ion-icon></a>
+                        <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-youtube"></ion-icon></a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card bg-dark border-0 shadow-lg" style="width: 14rem;">
+                    <img loading="lazy" src="https://scontent.cdninstagram.com/v/t51.2885-19/420853326_1722602334895794_1766455329401811867_n.jpg?stp=cp0_dst-jpg_s110x80_tt6&_nc_cat=104&ccb=1-7&_nc_sid=bf7eb4&_nc_ohc=HUcrxajRUeYQ7kNvgF9yntH&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&oh=00_AYBIxPbAb_22mr3Cagy5c3NqxQx4iZmm_h806ElIIpj47g&oe=67869E3D" class="card-img-top" alt="Aubin Mukoni">
+                    <div class="card-body text-center">
+                        <h5 class="mb-2 text-light">Aubin Mukoni</h5>
+                        <h6 class="text-secondary mb-3">Professional Photographer</h6>
+                        <a th:href="@{/}" class="btn btn-outline-light btn-sm">Know More</a>
+                    </div>
+                    <div class="dock-container text-center mt-3">
+                        <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-facebook"></ion-icon></a>
+                        <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-instagram"></ion-icon></a>
+                        <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-youtube"></ion-icon></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- social media quick link -->
+            <div class="dock-container text-center mt-3 align-items-center d-flex justify-content-center align-items-center">
+                <div class="d-flex align-items-center"><small>Visit our social medias</small><ion-icon name="arrow-forward-outline"></ion-icon></div>
+                <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-facebook"></ion-icon></a>
+                <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-instagram"></ion-icon></a>
+                <a th:href="@{/}" class="text-light mx-2"><ion-icon class="icon" name="logo-youtube"></ion-icon></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Footer -->
+    <footer class=" text-white text-center py-3 mt-5">
+        <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+    </footer>
+
+</div>
+
+
+<!-- Include Scripts -->
+<div th:replace="frame/websiteframe/script-site-frame :: script"></div>
+<script defer th:src="@{/blog/js/navbar.js}"></script>
+
+</body>
+</html>

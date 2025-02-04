@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>History Management</title>
+  <!-- Add Bootstrap CSS -->
+</head>
+<body>
+<div class="main-content" th:fragment="history-creation">
+  <div class="container-fluid">
+    <div class="row clearfix">
+      <!-- Left Frame (Application List) -->
+      <div class="col-md-4 application-list">
+        <h4>Posted Histories</h4>
+
+        <div th:each="group : ${groupedHistories}" class="history-group">
+          <details class="history-group-details">
+            <summary class="history-group-summary" th:text="'Histories - Date: ' + ${group.key}"></summary>
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center" th:each="history : ${group.value}">
+
+                <span class="title" th:text="${#strings.isEmpty(history.storyTitle) ? 'No Title Available' : history.storyTitle}"></span>
+
+                <div class="button-links">
+                    <!-- Edit link -->
+                    <a class="btn btn-warning btn-sm" th:href="@{'/story-edit/' + ${history.historyId}}" th:data-history-id="${history.historyId}">
+                      <i class="ik ik-edit"></i> Edit
+                    </a>
+
+                    <!-- Delete link -->
+                    <a class="btn btn-danger btn-sm" th:href="@{'/story-delete/' + ${history.historyId}}" th:data-history-id="${history.historyId}">
+                      <i class="ik ik-trash"></i> Delete
+                    </a>
+
+                    <!-- View link with null check for historyTitle -->
+                    <a class="btn btn-info btn-sm" th:href="@{'/story-view/' + ${history.historyId}}" th:data-history-id="${history.historyId}">
+                      <i class="ik ik-eye"></i> View
+                    </a>
+
+
+                </div>
+              </li>
+            </ul>
+          </details>
+        </div>
+
+      </div>
+
+      <!-- Right Frame (A4 Page Style) -->
+      <div class="col-md-8">
+        <!-- Nav Tabs -->
+        <ul class="nav nav-tabs" id="historyTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="details-tab" data-toggle="tab" href="#details" role="tab" aria-controls="details" aria-selected="true">History Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="create-tab" data-toggle="tab" href="#create" role="tab" aria-controls="create" aria-selected="false">Create History</a>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="historyTabContent">
+          <!-- History Details Tab -->
+          <div class="col-md-10 tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+            <div class="a4-frame">
+              <h2>Last history</h2>
+              <div id="history-details"></div>
+            </div>
+          </div>
+
+          <!-- Create History Tab -->
+          <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
+            <h2>Create New History</h2>
+            <form id="historyForm" method="post" enctype="multipart/form-data">
+
+              <div class="form-group">
+                <label for="historyMainImage">Main Image:</label>
+                <input type="file" class="form-control-file" id="historyMainImage" name="historyMainImage">
+              </div>
+
+              <!-- Placeholder for the uploaded image -->
+              <div id="imagePreview" style="display: none;">
+                <h5>Uploaded Image:</h5>
+                <img id="previewImage" src="" alt="Preview" style="max-width: 100%; height: auto;">
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="historyTitle">Title:</label>
+                <input type="text" class="form-control" id="historyTitle" name="historyTitle" required>
+              </div>
+
+              <div class="form-group">
+                <label for="historyCategory">Category:</label>
+                <input type="text" class="form-control" id="historyCategory" name="historyCategory" required>
+              </div>
+
+              <div class="form-group">
+                <label for="historyAuthor">Author:</label>
+                <input type="text" class="form-control"  id="historyAuthor" name="historyAuthor" required>
+              </div>
+<!--              storyCaption-->
+
+              <div class="form-group">
+                <label for="storyCaption">Story Caption:</label>
+                <input type="text" class="form-control"  id="storyCaption" name="storyCaption"  required>
+              </div>
+
+<!--              storyPhotoGrapherName-->
+
+              <div class="form-group">
+                <label for="storyPhotoGrapherName">Story Photographer Name or (email):</label>
+                <input type="text" class="form-control"  id="storyPhotoGrapherName" name="storyPhotoGrapherName"  required>
+              </div>
+<!--storyWhatsAppLink-->
+
+              <div class="form-group">
+                <label for="storyWhatsAppLink">WhatApp Link:</label>
+                <input type="text" class="form-control"  id="storyWhatsAppLink" name="storyWhatsAppLink"  required>
+              </div>
+<!--              storyFacebookLink-->
+              <div class="form-group">
+                <label for="storyFacebookLink">Facebook Link:</label>
+                <input type="text" class="form-control"  id="storyFacebookLink" name="storyFacebookLink"  required>
+              </div>
+
+              <div class="form-group">
+                <label for="storyInstagramLink">Instagram Link:</label>
+                <input type="text" class="form-control"  id="storyInstagramLink" name="storyInstagramLink"  required>
+              </div>
+
+              <div class="form-group">
+                <label for="storyTwitterLink">X(Twitter) Link:</label>
+                <input type="text" class="form-control"  id="storyTwitterLink" name="storyTwitterLink"  required>
+              </div>
+
+              <div class="form-group">
+                <label for="storyYoutubeLink">Youtube Link:</label>
+                <input type="text" class="form-control"  id="storyYoutubeLink" name="storyYoutubeLink"  required>
+              </div>
+
+
+              <div class="form-group">
+                <label for="storyTiktokLink">Tiktok Link:</label>
+                <input type="text" class="form-control"  id="storyTiktokLink" name="storyTiktokLink"  required>
+              </div>
+
+
+              <div class="form-group">
+                <label for="moreInfos">More Information:</label>
+                <textarea class="form-control" id="moreInfos" name="moreInfos" rows="5" required></textarea>
+              </div>
+
+
+              <div class="tag-container">
+                <div class="form-group">
+                  <input type="text" id="tag-input" placeholder="Type and press Enter to add tags">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-header"><h3>History Content</h3></div>
+                    <div class="card-body">
+                      <textarea class="form-control html-editor" rows="10" id="summernote"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+
+              <button type="submit" class="btn btn-primary mt-3">Create History</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

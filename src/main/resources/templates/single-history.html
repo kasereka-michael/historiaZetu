@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include SEO -->
+    <div th:replace="frame/websiteframe/seo :: seo"></div>
+
+    <title>Historia Zetu | about us</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Preload styles -->
+    <link rel="stylesheet" th:href="@{/blog/css/come-css.css}" as="style" type="text/css" >
+    <link rel="stylesheet" th:href="@{/blog/css/blog.css}" as="style" type="text/css">
+
+</head>
+
+<body class="d-flex flex-column" style="background-color: #000000; background-image: url('/blog/images/1.webp'); background-repeat: no-repeat; overflow-y: scroll; overflow-x:hidden;  background-size: cover;font-size: clamp(12px, 2vw, 16px);">
+<!-- Navbar -->
+<div th:replace="frame/websiteframe/navbar :: website-navbar"></div>
+
+<div class="container d-flex flex-wrap justify-content-center align-items-start histories-container">
+
+    <section class="story-container">
+    <div class="story-header">
+        <h1 class="story-title fst-italic lh-1 fs-2 mb-2 welcome-">Story Title</h1>
+        <div class="story-info">
+            <p class="title">Photo by: <strong>Photographer Name</strong></p>
+            <p class="title" >Story by: <strong>Narrator Name</strong></p>
+            <p class="title">Date: <strong>MM/DD/YYYY</strong></p>
+        </div>
+    </div>
+    <div class="share-container">
+        <p class="partagé" >Partager </p>
+        <a href="" title="copy the story">
+            <ion-icon class="copy" name="copy"></ion-icon>
+        </a>
+
+        <a title="share the on facebook" href="https://www.facebook.com/sharer/sharer.php?u=yourstoryurl.com" class="share-facebook" target="_blank" rel="noopener noreferrer">
+            <ion-icon class="share-facebook" name="logo-facebook"></ion-icon>
+        </a>
+        <a  title="share the story on instagram" href="https://www.instagram.com/?url=yourstoryurl.com" class="share-instagram" target="_blank" rel="noopener noreferrer">
+            <ion-icon class="share-intagram" name="logo-instagram"></ion-icon>
+        </a>
+        </a>
+        <a title="share the story on whatsapp" href="https://api.whatsapp.com/send?text=yourstoryurl.com" class="share-whatsapp" target="_blank" rel="noopener noreferrer">
+            <ion-icon class="share-whatsapp" name="logo-whatsapp"></ion-icon>
+        </a>
+    </div>
+    <img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2018/04/18/13/congo-camp-13.jpg?quality=75&width=1250&crop=3%3A2%2Csmart&auto=webp" alt="Story Photo" class="story-photo">
+    <div class="story-caption">Not even two-year-old Rachele-Ngabausi was spared the violence when attackers came into her village at night wielding machetes (Reuters)</div>
+    <div class="story-content ">
+        <p style="color: #fff; text-align:left" >
+            Il était une fois, dans les vallées verdoyantes du Nord-Kivu, une petite fille nommée Amina. C'était il y a bien longtemps, mais les souvenirs de cette époque restent gravés dans mon esprit comme si c'était hier. J'avais des yeux brillants d'innocence et de curiosité, et un sourire qui illuminait même les jours les plus sombres. Mais derrière ce sourire se cachait une histoire de survie et de courage, faite de moments difficiles et d'espoir infini.<br><br>
+            Je me souviens encore du jour où la guerre a frappé notre région. Les bruits assourdissants des combats et les cris de douleur envahissaient nos journées autrefois tranquilles. Ma famille, comme tant d'autres, a dû fuir notre foyer pour échapper à la violence qui ravageait notre terre. Nous avons quitté notre maison, nos terres, nos souvenirs, pour chercher refuge loin des horreurs de la guerre.<br><br>
+            Les jours devenaient des semaines, les semaines des mois, et chaque jour était un défi pour notre survie dans les camps de réfugiés surpeuplés. Mais malgré les épreuves, je gardais espoir. Je me souviens avoir partagé mes maigres provisions avec les autres enfants, cherchant toujours des raisons de sourire, même dans les moments les plus sombres. Parce que même au milieu de la tourmente, il y avait toujours de petits moments de bonheur à saisir.<br><br>
+            Un jour, alors que je jouais parmi les décombres de notre village détruit, j'ai découvert un petit livre abandonné. Avec émerveillement, j'ai commencé à tourner les pages jaunies par le temps et à m'évader dans les histoires qu'il contenait. Ce livre est devenu mon refuge, ma source de réconfort au milieu du chaos qui m'entourait. Chaque mot était comme une bouée de sauvetage dans un océan de désespoir, me rappelant qu'il y avait toujours de l'espoir, même dans les moments les plus sombres.<br><br>
+            Malgré la tristesse et la peur, je refusais de perdre espoir. Je croyais en un avenir meilleur, où la paix règnerait à nouveau dans notre région, où les enfants pourraient grandir en sécurité et en liberté. Je rêvais d'un jour où les sourires remplaceraient les larmes, où les rires rempliraient à nouveau nos vallées de leur douce mélodie.<br>
+            Aujourd'hui, des années plus tard, je suis devenue un symbole de résilience et d'espoir pour ma communauté. Mes yeux ont vu tant de souffrance, mais mon cœur reste rempli d'espoir. Car je sais que même dans les moments les plus sombres, il y a toujours une lueur d'espoir. Et c'est cette lueur qui me guide chaque jour vers un avenir meilleur, où la paix et la justice règnent enfin.
+        </p>
+    </div>
+    <div class="story-stats">
+        <span><ion-icon name="reader"></ion-icon> Readers: 123</span>
+        <span><ion-icon name="heart"></ion-icon> Likes: 456</span>
+        <span><ion-icon name="share-social"></ion-icon> shared: 456</span>
+        <span><ion-icon name="chatbubbles"></ion-icon> Comments: 789</span>
+
+    </div>
+    <div class="next-prev-btn">
+        <button class="btn-prev"> <ion-icon name="arrow-back"></ion-icon>prev</button>
+        <button class="btn-next">next <ion-icon name="arrow-forward"></ion-icon></button>
+
+    </div>
+    <div class="comment-box">
+        <textarea placeholder="Leave a comment..."></textarea>
+        <button type="button btn-primary">Post Comment</button>
+    </div>
+    <div class="comments-list">
+        <div class="comment">
+            <p class="comment-author">User1</p>
+            <p class="comment-text">This is a comment text.</p>
+            <p class="comment-date">Posted on: MM/DD/YYYY</p>
+        </div>
+        <div class="comment">
+            <p class="comment-author">User2</p>
+            <p class="comment-text">This is another comment text.</p>
+            <p class="comment-date">Posted on: MM/DD/YYYY</p>
+        </div>
+    </div>
+</section>
+
+        <!-- tags-->
+
+    <section class="story-section-accessories">
+        <div class="story-access-hashtags">
+            <h3>HashTags</h3>
+            <ul>
+                <li><a href="#">#Tag1</a></li>
+                <li><a href="#">#Tag1</a></li>
+                <li><a href="#">#Tag1</a></li>
+                <li><a href="#">#Tag1</a></li>
+                <li><a href="#">#Tag1</a></li>
+                <li><a href="#">#Tag1</a></li>
+                <li><a href="#">#Tag1</a></li>
+            </ul>
+            <div class="story-related-hashtags-list">
+                <h3>Related Hashtags</h3>
+                <ul>
+                    <li class="flex min-h-[250px] w-full max-w-md overflow-hidden rounded-lg bg-gray-800 shadow-lg">
+                        <a href="#">
+                        <div class="relative w-full">
+                            <img
+                                    src="/api/placeholder/400/320"
+                                    alt="Card background"
+                                    class="absolute h-full w-full object-cover"
+                            />
+                            <div class="relative z-10 flex h-full flex-col justify-start bg-gradient-to-t from-gray-900/90 to-transparent p-6">
+                                <h3 class="mb-2 text-xl title-related font-bold text-white">Title</h3>
+                                <span class="text-sm w-25 text-gray-300">Category</span>
+                            </div>
+                        </div>
+                        </a>
+                    </li>
+                    <li class="flex min-h-[250px] w-full max-w-md overflow-hidden rounded-lg bg-gray-800 shadow-lg">
+                        <a href="#">
+                            <div class="relative w-full">
+                                <img
+                                        src="/api/placeholder/400/320"
+                                        alt="Card background"
+                                        class="absolute h-full w-full object-cover"
+                                />
+                                <div class="relative z-10 flex h-full flex-col justify-start bg-gradient-to-t from-gray-900/90 to-transparent p-6">
+                                    <h3 class="mb-2 text-xl title-related font-bold text-white">Title</h3>
+                                    <span class="text-sm w-25 text-gray-300">Category</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="flex min-h-[250px] w-full max-w-md overflow-hidden rounded-lg bg-gray-800 shadow-lg">
+                        <a href="#">
+                            <div class="relative w-full">
+                                <img
+                                        src="/api/placeholder/400/320"
+                                        alt="Card background"
+                                        class="absolute h-full w-full object-cover"
+                                />
+                                <div class="relative z-10 flex h-full flex-col justify-start bg-gradient-to-t from-gray-900/90 to-transparent p-6">
+                                    <h3 class="mb-2 text-xl title-related font-bold text-white">Title</h3>
+                                    <span class="text-sm w-25 text-gray-300">Category</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+</footer>
+
+
+<!-- Include Scripts -->
+<div th:replace="frame/websiteframe/script-site-frame :: script"></div>
+<script defer th:src="@{/blog/js/navbar.js}"></script>
+
+<script defer th:inline="javascript">
+    /*<![CDATA[*/
+    const storiesJson = /*[[${story}]]*/ null;    /*]]>*/
+</script>
+<script>
+
+
+
+
+</script>
+
+
+</body>
+</html>

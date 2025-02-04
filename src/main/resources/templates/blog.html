@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Include SEO -->
+  <div th:replace="frame/websiteframe/seo :: seo"></div>
+
+  <title>Historia Zetu | about us</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Preload styles -->
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+  <link rel="stylesheet" th:href="@{/blog/css/come-css.css}" as="style" type="text/css" >
+  <link rel="stylesheet" th:href="@{/blog/css/blog.css}" as="style" type="text/css">
+
+</head>
+
+<body class="d-flex flex-column" style="background-color: #000000; background-image: url('/blog/images/1.webp'); background-repeat: no-repeat; overflow-y: scroll; overflow-x:hidden; background-position: center; background-size: cover;font-size: clamp(12px, 2vw, 16px);">
+<!-- Navbar -->
+<div th:replace="frame/websiteframe/navbar :: website-navbar"></div>
+
+<!-- Main Content -->
+<div class="main mt-5 pt-5 mt-5">
+  <div class="contain d-flex justify-content-center">
+
+
+    <!-- Filter Section -->
+    <div class="row justify-content-center ">
+      <div class="col-md-6">
+        <div class="search-container">
+          <input type="text"  id="search" class="form-control search-input" placeholder="Search by Title...">
+          <ion-icon class="search-icon" name="search"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Stories Section -->
+    <ul class="row stories-container justify-content-center g-2">
+
+
+      <!-- Single Story -->
+
+
+    </ul>
+
+
+  </div>
+
+  <nav aria-label="Page navigation example" class="pagination example m-4" id="pagination">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+</footer>
+
+
+
+<!-- Include Scripts -->
+<div th:replace="frame/websiteframe/script-site-frame :: script"></div>
+<script async th:src="@{/dashboard/plugins/sweetalert/sweetalert2.all.min.js}"></script>
+<script async th:src="@{/dashboard/plugins/sweetalert/sweetalerts.min.js}"></script>
+<script defer th:src="@{/blog/js/navbar.js}"></script>
+<script defer th:src="@{/blog/js/storiesStore.js}"></script>
+
+</body>
+</html>

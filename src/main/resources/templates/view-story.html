@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include SEO -->
+    <div th:replace="frame/websiteframe/seo :: seo"></div>
+
+    <title>Historia Zetu | about us</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Preload styles -->
+    <link rel="stylesheet" th:href="@{/blog/css/come-css.css}" as="style" type="text/css" >
+    <link rel="stylesheet" th:href="@{/blog/css/blog.css}" as="style" type="text/css">
+
+    <div th:replace="frame/websiteframe/script-site-frame :: script"></div>
+
+</head>
+
+<body class="d-flex flex-column" style="background-color: #000000; background-image: url('/blog/images/1.webp'); background-repeat: no-repeat; overflow-y: scroll; overflow-x:hidden;  background-size: cover;font-size: clamp(12px, 2vw, 16px);">
+<!-- Navbar -->
+<div th:replace="frame/websiteframe/navbar :: website-navbar"></div>
+
+<!-- main history or lastest read or lastest posted history -->
+
+
+<div class="container-main-history p-4">
+<!--    <div id="storiesData" style="display:none;" th:text="${stories}"></div>-->
+
+    <div class="container my-5">
+        <div class="row card-continers">
+
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+    <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+</footer>
+
+
+<!-- Include Scripts -->
+
+<script defer th:src="@{/blog/js/navbar.js}"></script>
+<!--<script th:src="@{/blog/js/viewStory.js}" defer></script>-->
+<!-- Embed the stories data into the page -->
+<script defer th:inline="javascript">
+    /*<![CDATA[*/
+    const storiesJson = /*[[${stories}]]*/ '[]'; // Default to an empty array if no data is passed
+    /*]]>*/
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    let stories = [];
+
+    try {
+        stories = JSON.parse(storiesJson);
+    } catch (error) {
+        console.error('Error parsing stories data:', error);
+    }
+
+    if (!Array.isArray(stories) || stories.length === 0) {
+        console.error('No valid stories data available');
+        $('.card-continers').html('<p>No data found</p>');
+    } else {
+        console.log('Stories:', stories);
+        displayStories(0);
+    }
+
+    let currentIndex = 0;
+
+    function displayStories(index) {
+        let storiesHtml = '';
+
+        if (!stories || stories.length === 0) {
+            $('.card-continers').html('<p>No data found</p>');
+            return;
+        }
+
+        if (index < 0 || index >= stories.length) {
+            console.error('Invalid index:', index);
+            $('.card-continers').html('<p>Invalid story index</p>');
+            return;
+        }
+
+        let story = stories[index];
+
+        storiesHtml += `
+        <div class="col-12 col-lg-6 order-2 order-lg-1">
+            <div class="main-history main-history-small" style="padding: 5px; backdrop-filter: blur(16px) saturate(180%);
+                -webkit-backdrop-filter: blur(16px) saturate(180%); background-color: rgba(22, 22, 22, 0.25);
+                border-radius: 10px; overflow: hidden; border: 1px solid #777;">
+
+                <div class="story-header">
+                    <h1 class="story-title fst-italic lh-1 fs-2 mb-2">${story.storyTitle ?? 'Untitled Story'}</h1>
+                    <div class="story-info">
+                        <p>Photo by: <strong>${story.storyPhotoGrapherName ?? 'N/A'}</strong></p>
+                        <p>Story teller: <strong>${story.storyAuthor ?? 'N/A'}</strong></p>
+                        <p>Posted Date: <strong>${story.historyDate ? new Date(story.historyDate).toLocaleDateString() : 'Unknown date'}</strong></p>
+                    </div>
+                </div>
+
+                <div class="share-container">
+                    <p>Partager</p>
+                    <a href="#" title="Copy the story"><ion-icon class="copy" name="copy"></ion-icon></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${story.storyFacebookLink ?? '#'}" target="_blank">
+                        <ion-icon class="share-facebook" name="logo-facebook"></ion-icon>
+                    </a>
+                    <a href="https://www.instagram.com/?url=${story.storyInstagramLink ?? '#'}" target="_blank">
+                        <ion-icon class="share-instagram" name="logo-instagram"></ion-icon>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?text=${story.storyWhatsAppLink ?? '#'}" target="_blank">
+                        <ion-icon class="share-whatsapp" name="logo-whatsapp"></ion-icon>
+                    </a>
+                </div>
+
+                <img src="data:image/png;base64,${story.historyMainImage}" alt="${story.storyTitle}" class="story-photo">
+
+                <div class="story-caption">
+                    ${story.storyCaption ?? 'N/A'}
+                    <a href="/api/histories/view-entire-story/${story.historyId}" class=" outline">Lire l'histoire entière...</a>
+                </div>
+
+                <div class="story-content  text-align-justify">
+                    <p style="color: #fff; text-align:justify">${story.historyContent?.substring(0, 260).concat("...") ?? 'N/A'}</p>
+                </div>
+
+                <div class="comment-box">
+                    <textarea placeholder="Leave a comment..."></textarea>
+                    <button type="button" class="btn-primary">Post Comment</button>
+                </div>
+                <div class="comments-list">
+                    ${(story.comments || []).map(comment => `
+                        <div class="comment">
+                            <p class="comment-author">${comment.author ?? 'Anonymous'}</p>
+                            <p class="comment-text">${comment.text}</p>
+                            <p class="comment-date">Posted on: ${comment.date ?? 'Unknown'}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+
+                <div class="col-12 col-lg-6 order-1 order-lg-2 d-flex">
+            <div class="d-flex flex-column w-100">
+
+              <div class="stats-card flex-fill">
+                            <h5>Summary Statistics</h5>
+                                <div class="statistics-infos">
+                                    <!-- Facebook -->
+                                    <div class="d-flex flex-column align-items-center my-2">
+                                        <a href="#" class="text-light mx-2">
+                                            <ion-icon class="icon" name="logo-facebook"></ion-icon>
+                                        </a>
+                                        <span>Facebook</span>
+                                        <span><ion-icon class="eye" name="eye"></ion-icon></span>
+                                        <span><b>10,000</b></span>
+                                    </div>
+
+                                    <!-- Instagram -->
+                                    <div class="d-flex flex-column align-items-center my-2">
+                                        <a href="#" class="text-light mx-2">
+                                            <ion-icon class="icon" name="logo-instagram"></ion-icon>
+                                        </a>
+                                        <span>Instagram</span>
+                                        <span><ion-icon class="eye" name="eye"></ion-icon></span>
+                                        <span><b>10,000</b></span>
+                                    </div>
+
+                                    <!-- YouTube -->
+                                    <div class="d-flex flex-column align-items-center my-2">
+                                        <a href="#" class="text-light mx-2">
+                                            <ion-icon class="icon" name="logo-youtube"></ion-icon>
+                                        </a>
+                                        <span>Youtube</span>
+                                        <span><ion-icon class="eye" name="eye"></ion-icon></span>
+                                        <span><b>10,000</b></span>
+                                    </div>
+
+                                    <!-- TikTok -->
+                                    <div class="d-flex flex-column align-items-center my-2">
+                                        <a href="#" class="text-light mx-2">
+                                            <ion-icon class="icon" name="logo-tiktok"></ion-icon>
+                                        </a>
+                                        <span>Tiktok</span>
+                                        <span><ion-icon class="eye" name="eye"></ion-icon></span>
+                                        <span><b>10,000</b></span>
+                                    </div>
+                                </div>
+
+                        </div>
+
+    `;
+
+        // Related Stories
+        if (stories.length > index + 1) {
+            storiesHtml += `
+
+
+                <div class="carousel slide flex-fill" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-container">
+                            <div class="stories-list">
+        `;
+
+            for (let i = index + 1; i < stories.length; i++) {
+                let nextStory = stories[i];
+                storiesHtml += `
+                <div class="container-history" style="width: 15rem;">
+                    <div class="wrapper">
+                        <div class="banner-image">
+                            <img src="data:image/png;base64,${nextStory.historyMainImage}" alt="${nextStory.storyTitle}" class="story-photo">
+                        </div>
+                        <h3 class="fst-italic lh-1 fs-5 mb-2 welcome- text-white">${nextStory.storyTitle?.substring(0,14).concat("...") ?? 'N/A'}</h3>
+                        <div class="intro-history paragraph color-letter"><small>${nextStory.historyContent?.substring(0, 20).concat("...") ?? 'N/A'}</small></div>
+                    </div>
+                    <div class="details-card">
+                        <article class="details-card-text">Category: <span>${nextStory.historyCategory ?? 'N/A'}</span></article>
+                        <article class="details-card-text">on: <span>${nextStory.historyDate ? new Date(nextStory.historyDate).toLocaleDateString() : 'Unknown date'}</span></article>
+                    </div>
+                    <div class="button-wrapper">
+                        <a href="/api/histories/view-story/${nextStory.historyId ?? '#'}" class="btn-voir-plus outline">Voir plus</a>
+                         <span class="numbering" id="like-count-${nextStory.historyId}">${nextStory.likesCount ?? 0} Reads</span>
+                    </div>
+                </div>
+            `;
+            }
+
+            storiesHtml += `
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        }
+
+        $('.card-continers').html(storiesHtml);
+    }
+
+    function rotateStoriesLeft() {
+        if (stories.length > 1) {
+            currentIndex = (currentIndex - 1 + stories.length) % stories.length;
+            displayStories(currentIndex);
+        }
+    }
+
+    function rotateStoriesRight() {
+        if (stories.length > 1) {
+            currentIndex = (currentIndex + 1) % stories.length;
+            displayStories(currentIndex);
+        }
+    }
+
+    // Event listeners for carousel navigation
+    $('.carousel-control-prev').on('click', rotateStoriesLeft);
+    $('.carousel-control-next').on('click', rotateStoriesRight);
+
+    // Event listener for "Voir plus" buttons
+    $(document).on('click', '.btn-voir-plus', function (e) {
+        e.preventDefault();
+        const storyId = $(this).attr('href');
+        console.log('View more clicked for story:', storyId);
+    });
+</script>
+
+
+</body>
+</html>

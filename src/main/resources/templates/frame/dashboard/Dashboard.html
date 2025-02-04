@@ -1,0 +1,172 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>HITORIA ZETU DASHBOARD</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="msapplication-config" content="/browserconfig.xml"/>
+	<!-- Favicon -->
+	<link rel="icon" type="image/x-icon" th:href="@{/dashboard/img/favicon.ico}"/>
+
+	<!-- Google Fonts -->
+	<link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800}">
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/bootstrap/dist/css/bootstrap.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/fontawesome-free/css/all.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/icon-kit/dist/css/iconkit.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/ionicons/dist/css/ionicons.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/perfect-scrollbar/css/perfect-scrollbar.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/jvectormap/jquery-jvectormap.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/weather-icons/css/weather-icons.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/c3/c3.min.css}" type="text/css">
+	<link rel="stylesheet" th:href="@{/dashboard/dist/css/theme.min.css}" type="text/css">
+
+	<!-- JavaScript Files -->
+	<script th:src="@{/dashboard/src/js/vendor/modernizr-2.8.3.min.js}" type="text/javascript"></script>
+
+	<style>
+
+.chat-box{
+	overflow-y: scroll;
+}
+	.btn-icon {
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    color: inherit; /* Inherit color */
+    font-size: 15px; /* Match font size with icons */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: color 0.3s ease; /* Smooth color transition */
+	}
+
+	.btn-icon:hover {
+        color: #007bff;
+	}
+	.text-center-error{
+		color: #e34f54;
+	}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<!-- Header and other content -->
+	<div th:replace="frame/dashboard/headframe :: admin_head-frame"></div>
+	<div class="page-wrap">
+		<!-- Slidebar and main content -->
+		<div th:replace="frame/dashboard/slidebarframe :: slidebar_admin"></div>
+		<div th:replace="frame/dashboard/page-content :: main-page-admin"></div>
+		<aside class="right-sidebar">
+			<div th:replace="frame/dashboard/right-sidebar :: right-sidebar-admin"></div>
+		</aside>
+		<div th:replace="frame/dashboard/chat-panal :: chat-panel"></div>
+		<div th:replace="frame/dashboard/settings :: settings-admin"></div>
+		<div th:replace="frame/dashboard/footer :: footer"></div>
+	</div>
+</div>
+<div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="demoModalLabel">User Registration Form</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<span class="text-center-error"></span>
+				<form class="forms-sample" id="userRegistrationForm">
+					<div class="form-group">
+						<label for="exampleInputUsername1">first name</label>
+						<input type="text" class="form-control" id="exampleInputUsername1" placeholder="first name">
+					</div>
+					<div class="form-group">
+						<label for="lastname">last name</label>
+						<input type="text" class="form-control" id="lastname" placeholder="last name">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+						<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+					</div>
+					<div class="form-group">
+						<label for="phonenumber">phone number</label>
+						<input type="text" class="form-control" id="phonenumber" placeholder="phone number">
+					</div>
+					<div class="form-group">
+						<label for="roleSelect">Select Role</label>
+						<select class="form-control" id="roleSelect">
+							<option value="2">ADMIN</option>
+							<option value="8">FINANCE_MANAGER</option>
+							<option value="4">HR</option>
+							<option value="1">HEADER</option>
+							<option value="5">REGISTRAR</option>
+							<option value="6">STUDENT</option>
+							<option value="7">TEACHER</option>
+							<option value="10">TECHNICIAN</option>
+							<option value="9">IT_MANAGER</option>
+							<option value="3">GUEST</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="exampleInputPassword1">Password</label>
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<label for="exampleInputConfirmPassword1">Confirm Password</label>
+						<input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Password">
+					</div>
+					<button type="submit" class="btn btn-primary mr-2" id="user-rec-btn">Submit</button>
+					<button class="btn btn-light">Cancel</button>
+				</form>
+			</div>
+			<div class="modal-footer d-flex justify-content-center">
+<!--				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--				<button type="button" class="btn btn-primary">Save changes</button>-->
+				<span class="text-center">please make sure you fill the form with the exact required information</span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- JavaScript Files -->
+<script th:src="@{/dashboard/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/dashboard/plugins/popper.js/dist/umd/popper.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/bootstrap/dist/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/screenfull/dist/screenfull.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/datatables.net/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/datatables.net-responsive/js/dataTables.responsive.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/jvectormap/jquery-jvectormap.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/jvectormap/tests/assets/jquery-jvectormap-world-mill-en.js}"  type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/moment/moment.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/d3/dist/d3.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/plugins/c3/c3.min.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/js/tables.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/js/charts.js}" type="text/javascript"></script>
+<script th:src="@{/dashboard/dist/js/theme.min.js}" type="text/javascript"></script>
+<script th:src="@{https://cdn.amcharts.com/lib/5/index.js}"></script>
+<script th:src="@{https://cdn.amcharts.com/lib/5/map.js}"></script>
+<script th:src="@{https://cdn.amcharts.com/lib/5/geodata/worldLow.js}"></script>
+<script th:src="@{https://cdn.amcharts.com/lib/5/geodata/usaLow.js}"></script>
+<script th:src="@{https://cdn.amcharts.com/lib/5/themes/Animated.js}"></script>
+<script th:src="@{/dashboard/js/map.js}"></script>
+
+
+<!-- Google Analytics -->
+<script>
+    (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='https://www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+    ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,486 @@
+body{
+    width: 100%;
+    box-sizing: border-box;
+    background-image:  url('/assets/imgs/homebk.jpg') ;
+    background-color: black;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  
+}
+.homebk::before{
+    margin-top: 5rem;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: hsla(112, 48%, 9%, 0.767); /* Adjust the color and opacity */
+    z-index: 1;
+    opacity: 2;
+}
+
+@keyframes move-background {
+    from {
+          -webkit-transform: translate3d(0px, 0px, 0px);
+      }
+      to { 
+          -webkit-transform: translate3d(1000px, 0px, 0px);
+      }
+  }
+  @-webkit-keyframes move-background {
+    from {
+          -webkit-transform: translate3d(0px, 0px, 0px);
+      }
+      to { 
+          -webkit-transform: translate3d(1000px, 0px, 0px);
+      }
+  }
+  
+  @-moz-keyframes move-background {    
+      from {
+          -webkit-transform: translate3d(0px, 0px, 0px);
+      }
+      to { 
+          -webkit-transform: translate3d(1000px, 0px, 0px);
+      }
+  }
+  
+      @-webkit-keyframes move-background {
+      from {
+          -webkit-transform: translate3d(0px, 0px, 0px);
+      }
+      to { 
+          -webkit-transform: translate3d(1000px, 0px, 0px);
+      }
+  }
+  
+  .background-container{
+      position: fixed;
+      top: 0;
+      left:0;
+      bottom: 0;
+      right: 0;
+      display: flex;
+      align-items: flex-start; 
+      flex-wrap: wrap;
+    }
+  
+  .stars {
+   background: black url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1231630/stars.png) repeat;
+   position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: block;
+        z-index: 0;
+  }
+  
+/* for home page */
+
+
+   
+
+
+  .twinkling{
+      width:10000px;
+      height: 100%;
+      background: transparent url("/assets/imgs/twinkling.png") repeat;
+      background-size: 1000px 1000px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+      
+      -moz-animation:move-background 70s linear infinite;
+    -ms-animation:move-background 70s linear infinite;
+    -o-animation:move-background 70s linear infinite;
+    -webkit-animation:move-background 70s linear infinite;
+    animation:move-background 70s linear infinite;
+      
+  }
+  
+  .clouds{
+      width:1000%;
+      height: 100%;
+      background: transparent url("/assets/imgs/clouds_repeat.png") repeat;
+      background-size: 1000px 1000px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+  
+     -moz-animation:move-background 150s linear infinite;
+    -ms-animation:move-background 150s linear infinite;
+    -o-animation:move-background 150s linear infinite;
+    -webkit-animation:move-background 150s linear infinite;
+    animation:move-background 150s linear infinite;
+  }
+  .most-read{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* Inner shadow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    flex-direction: column;
+    font-size: 1.1rem;
+  }
+.most-read ion-icon{
+    font-size: 3rem;
+}
+  .img{
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://www.accord.org.za/wp-content/uploads/2017/04/lyall-2.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    
+  }
+  .img{
+    width: 10rem;
+    height: auto;
+    position:  relative;
+    z-index: 1;
+    padding-bottom: 10rem;
+    margin:0 1rem;
+  }
+  .welcome{ 
+    position: relative;
+    padding: 5px;
+    color: aliceblue;
+    z-index: 5;
+    
+}
+
+.container-setence{
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    padding:1rem 0;
+    width: 50rem;
+}
+#contactForm{
+    /* width: 20rem; */
+    position: relative;
+    z-index: 3;
+    color: #fff;
+}
+
+nav{
+    position: fixed;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+}
+.welcome-header{
+    font-family: "EB Garamond", serif !important;
+    font-weight: 800 !important;
+    font-style: normal;
+    font-size: 5rem;
+    text-align: center;
+}  
+.welcome{
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+.paragraph{
+    font-family: 'Merriweather', serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 1em;
+  padding-top: 2rem;
+}
+.abonne-message{
+    font-style: italic;
+    font-weight: 300;
+    
+}
+.media-icon{
+    color: #fff;
+    font-size: 2rem;
+    margin: 5px;
+    background-color: #000;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.media-icon:hover{
+    background-color: #dadada9c;
+    cursor: pointer;
+}
+
+.media-container{
+    padding-top: 1rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px #dadada9c;
+    flex-wrap: wrap;
+}
+.plus-lu{
+    position: absolute;
+    right: 27%;
+    bottom: 40%;
+    height: fit-content;
+    z-index: 4;
+    backdrop-filter: blur(30px);
+    box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+    border: 20x solid rgba(255, 255, 255, 0.18);
+}
+.card{
+    backdrop-filter: blur(30px);
+    box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+    border: 20x solid rgba(255, 255, 255, 0.18);
+    width: 20rem;
+}
+
+.element-container{
+    display: flex;
+    justify-content: center;
+    padding: 5rem 7rem 0;
+    gap: 5rem;
+    flex-wrap: wrap-reverse;
+}
+.nav-link {
+    color:#fff;
+    padding: 0.4rem;
+}
+.container-ctn{
+    padding:0.5rem 2rem;
+    display: flex;
+    justify-content: center;
+}
+.contact-message {
+    position: relative;
+    z-index: 4;
+}
+.contact-container{
+    position: relative;
+    z-index: 4;
+}
+.form-container{
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+    border-radius: 10px;
+}
+.form-label{
+    color: #fff;
+}
+.contact-message{
+    color: #fff;
+}
+.about-container{
+    color:  #ffffff;
+    position: relative;
+    z-index: 5;
+    display: flex;
+    gap: 5rem;
+    padding: 5rem 0;
+    flex-wrap: wrap;
+}
+.text-about{
+    width: 50rem;
+}
+
+.dock-container {
+    text-align: center;
+    /* background: white; */
+    padding: 0.6rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.dock {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.dock a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.dock a:hover {
+    transform: scale(1.2);
+}
+.icon {
+    font-size: 2rem;
+}
+.icon.github {
+    color: #000;
+}
+.icon.github:hover {
+    color: #333;
+}
+.icon.face {
+    color: #3b5998;
+}
+.icon.face:hover {
+    color: #2d4373;
+}
+.icon.inst {
+    color: #E4405F;
+}
+.icon.inst:hover {
+    color: #bc2a8d;
+}
+.icon.youtu {
+    color: #FF0000;
+}
+.icon.youtu:hover {
+    color: #cc0000;
+}
+
+.testimoniy-container{
+     position: relative;
+     z-index: 5;   
+     color:#fff;
+     padding: 2rem 5rem!important;
+
+}
+.voici-ce-que{
+    float: left;
+    font-size: 1.2rem;
+}
+
+
+
+@media (max-width: 767px) {
+
+
+    .expand-dock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .expand-button {
+        margin-top: 1rem;
+        cursor: pointer;
+    }
+}
+  
+.navbar-toggler{
+    margin-left: 1rem;
+}
+@media (max-width: 1300px) {
+    
+    .welcome-header {
+        font-size: 4rem;
+    }
+    .img {
+        height: 50vh;
+        width: 100%;
+        padding-bottom: 0;
+    }
+    .element-container {
+        padding: 1rem 3rem 0;
+        gap: 4rem;
+    }
+    .welcome{
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .navbar-toggler{
+        display: block;
+        height: fit-content;
+    }
+    .navbar-navi{
+        display: none !important;
+    }
+.contact-message{
+    padding: 1rem;
+
+} 
+    .responsive{
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    
+    body{
+        width: 100%;
+    }
+    .welcome{
+        width: 100%;
+    }
+    .welcome-header {
+        font-size: 3rem;
+    }
+    .most-read{
+        height: 7rem;
+        width: 7rem;
+        font-size: 1rem;
+    }
+    .img {
+        height: 50vh;
+        width: 100%;
+        padding-bottom: 0.5rem;
+    }
+    .element-container {
+        padding: 3rem 4rem 0;
+        gap: 3rem;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome{
+        width: 100%;
+    }
+    .welcome-header {
+        font-size: 2.5rem;
+    }
+    .img {
+        height: 40vh;
+        width: 100%;
+        padding-bottom: 1rem;
+    }
+    .element-container {
+        padding: 2rem 3rem 0;
+        gap: 2rem;
+    }
+    .paragraph {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-header {
+        font-size: 2rem;
+    }
+    .img {
+        height: 40vh;
+        width: 100%;
+        padding-bottom: 1rem;
+    }
+    .element-container {
+        padding: 0.3rem 2rem 0;
+        gap: 1rem;
+    }
+    .welcome {
+        width: 100%;
+    }
+    .paragraph {
+        font-size: 1.2rem;
+    }
+}

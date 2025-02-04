@@ -1,0 +1,144 @@
+.navbar-container{
+    display: flex;
+    flex-direction: row !important;
+}
+.navbar-navi{
+  gap: 10px;
+  display:flex;
+  list-style: none;  
+}
+
+@media screen and (max-width: 800px) {
+    .navbar a:not(:first-child) {display: none;}
+    .navbar.responsive{
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+    }
+
+  }
+  
+  @media screen and (max-width: 600px) {
+    .navbar.responsive {position: relative;}
+    .navbar.responsive .icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .navbar.responsive a {
+      float: none;
+      display: block;
+      text-align: left;
+    }
+  }
+
+
+
+
+
+
+
+
+
+  /* checking the sidebar  */
+  .main-story-container{
+    gap: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .circle-100 {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  .sidebar-title:after {
+    content: '';
+    position: relative;
+    top: 4px;
+    height: 1px;
+    width: 30px;
+    margin: auto;
+    background: #705e40;
+    display: block;
+  }
+  
+  .text-center {
+    text-align: center !important;
+  }
+  .page-sidebar {
+  justify-content: center !important;
+  display: flex;
+  flex-direction: column;
+}
+.page-sidebar img{
+  margin: 0 auto;
+}
+
+.page-sidebar .sidebar-title:after {
+  content: '';
+  position: relative;
+  top: 4px;
+  height: 1px;
+  width: 30px;
+  margin: auto;
+  background: #705e40;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  
+ .page-sidebar {
+   
+}
+  
+}
+
+.subscribe-wrapper {
+  position: relative;
+}
+
+.subscribe-wrapper input {
+  width: 90%;
+  border-radius: 0 40px 40px 0;
+  margin: auto;
+}
+
+.subscribe-wrapper button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 56px;
+  font-weight: bold;
+  font-size: 22px;
+  position: absolute;
+  border: 0;
+  right: 0;
+  top: -6px;
+  border: 2px solid #fff !important;
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+  padding: 0;
+  padding-bottom: 6px;
+  padding-left: 2px;
+}
+.send-icon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.send-icon ion-icon{
+  rotate: 270deg;
+}
+
+/* the comment */
+
+
+
+#tButton{
+  border: none;
+  background: none;
+  color: #fff;
+  text-decoration-line: underline;
+}

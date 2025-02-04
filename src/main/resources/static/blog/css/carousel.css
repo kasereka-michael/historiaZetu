@@ -1,0 +1,61 @@
+
+h1 {
+    font-size: clamp(24px, 4vw, 48px); /* Min: 24px, Preferred: 4vw, Max: 48px */
+}
+h2 {
+    font-size: clamp(20px, 3vw, 36px); /* Min: 20px, Preferred: 3vw, Max: 36px */
+}
+h3 {
+    font-size: clamp(18px, 2.5vw, 30px); /* Min: 18px, Preferred: 2.5vw, Max: 30px */
+}
+
+button {
+    font-size: clamp(12px, 1.5vw, 16px); /* Min: 12px, Preferred: 1.5vw, Max: 16px */
+}
+p {
+    font-size: clamp(14px, 1.8vw, 17px); /* Min: 14px, Preferred: 1.8vw, Max: 20px */
+}
+
+.carousel-item {
+    height: 100vh;
+    min-height: 300px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.carousel-caption {
+    /* bottom: 270px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-caption h5 {
+    font-size: 45px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
+
+.carousel-caption p {
+    width: 75%;
+    margin: auto;
+    font-size: 18px;
+    line-height: 1.9;
+}
+canvas {
+    transform: rotateZ(13deg) scale(1.2);
+    position: absolute;
+}
+.bg-image {
+    background-image: url('../images/1.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+    width: 100%;
+}

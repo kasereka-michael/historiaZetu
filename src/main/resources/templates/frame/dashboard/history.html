@@ -1,0 +1,536 @@
+<!doctype html>
+<html class="no-js" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>ADMIN DASHBOARD</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="msapplication-config" content="/browserconfig.xml"/>
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/x-icon" th:href="@{/dashboard/img/favicon.ico}"/>
+	<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/bootstrap/dist/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/fontawesome-free/css/all.min.css}">
+
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/ionicons/dist/css/ionicons.min.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/icon-kit/dist/css/iconkit.min.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/perfect-scrollbar/css/perfect-scrollbar.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/select2/dist/css/select2.min.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/plugins/mohithg-switchery/dist/switchery.min.css}">
+	<link rel="stylesheet" th:href="@{/dashboard/dist/css/theme.min.css}">
+	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css}">
+	<script th:src="@{/dashboard/src/js/vendor/modernizr-2.8.3.min.js}"></script>
+
+	<style>
+		.loading-page {
+            position: fixed;
+            background: rgba(7, 7, 7, 0.4);
+            top: 0;
+            left: 0;
+            z-index: 9999999;
+            text-align: center;
+            padding-top: 20%;
+        }
+        details summary:hover{
+	        background-color: rgba(58, 84, 122, 0.71);
+	        padding: 2px 3px;
+	        border-radius: 5px;
+	        cursor: pointer;
+        }
+        .story-link{
+	        list-style-type: none;}
+        .story-link:hover{
+	        border-bottom: 1px solid rgba(58, 84, 122, 0.38);
+	        background-color: rgba(98, 97, 97, 0.54);
+            padding: 2px 3px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .loading-icon {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            top: 45%;
+            font-size: 40px;
+            z-index: 99999;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            -webkit-animation: spin 2s linear infinite;
+            -moz-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-moz-keyframes spin {
+            100% {
+                -moz-transform: rotate(360deg);
+            }
+		}
+		.note-toolbar{
+			display: flex;
+			flex-wrap: wrap;
+		}
+        .chat-box{
+            overflow-y: scroll;
+        }
+        .btn-icon {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            color: inherit;
+            font-size: 15px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .btn-icon:hover {
+            color: #007bff;
+        }
+        .text-center-error{
+            color: #e34f54;
+        }
+	</style>
+	<style>
+        .a4-frame {
+            width: 210mm;
+            height: 297mm;
+            padding: 20px;
+            border: 1px solid #4d4d4d;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(169, 166, 166, 0.1);
+            overflow-y: auto;
+        }
+        .application-list {
+            border-right: 1px solid #ddd;
+            padding-right: 10px;
+        }
+        @media (max-width: 768px) {
+            .a4-frame {
+                width: 100%;
+                height: auto;
+            }
+        }
+        .tab-content {
+            padding-top: 20px;
+        }
+        .nav-tabs .nav-link {
+            background-color: #f8f9fa;
+        }
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .tag {
+            background-color: #404E67;
+            color: #fefefe;
+            padding: 2px 5px;
+            margin: 2px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+        }
+        .tag-close {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        #tag-input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: 3px;
+        }
+
+		.history-group-summary {
+			font-size: 1rem;
+			font-weight: bold;
+			color: #343a40;
+			margin-bottom: 10px;
+		}
+
+		.history-group-details {
+			margin-bottom: 20px;
+		}
+		.title{
+			font-size: 1rem;
+			cursor: pointer;
+		}
+		.button-links {
+			display: none; /* Hide buttons by default */
+		}
+
+		.list-group-item:hover .button-links {
+			display: flex; /* Show buttons on hover */
+			justify-content: space-between;
+			align-items: center;
+		}
+
+
+		.list-group-item {
+			border: 1px solid #ddd;
+			padding: 15px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+		}
+
+		.list-group-item .btn {
+			margin-right: 10px;
+		}
+
+		.list-group-item .btn-sm {
+			padding: 5px 10px;
+		}
+
+		.history-group .ik {
+			margin-right: 5px;
+		}
+		details[open] summary {
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+<div class="wrapper">
+	<!-- Header and other content -->
+	<div th:insert="frame/dashboard/headframe :: admin_head-frame"></div>
+	<div class="page-wrap">
+		<!-- Slidebar and main content -->
+		<div th:insert="frame/dashboard/slidebarframe :: slidebar_admin"></div>
+		<div th:insert="frame/dashboard/historyCreation :: history-creation"></div>
+		<aside class="right-sidebar">
+			<div th:insert="frame/dashboard/right-sidebar :: right-sidebar-admin"></div>
+		</aside>
+		<div th:insert="frame/dashboard/chat-panal :: chat-panel"></div>
+		<div th:insert="frame/dashboard/settings :: settings-admin"></div>
+		<div th:insert="frame/dashboard/footer :: footer"></div>
+
+
+	</div>
+</div>
+<div class="spinner-grow d-none loading-page" style="width: 100%; height: 100dvh;" role="status">
+		<span class="loading-icon"><i class="fas fa-spinner fa-spin"></i></span>
+</div>
+
+<!-- Scripts -->
+<script th:src="@{https://code.jquery.com/jquery-3.3.1.min.js}"></script>
+<script>window.jQuery || document.write('<script src="/dashboard/src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+<script th:src="@{/dashboard/plugins/popper.js/dist/umd/popper.min.js}"></script>
+<script th:src="@{/dashboard/plugins/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{/dashboard/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js}"></script>
+<script th:src="@{/dashboard/plugins/select2/dist/js/select2.min.js}"></script>
+<script th:src="@{/dashboard/plugins/summernote/dist/summernote-bs4.min.js}"></script>
+<script th:src="@{/dashboard/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js}"></script>
+<script th:src="@{/dashboard/plugins/jquery.repeater/jquery.repeater.min.js}"></script>
+<script th:src="@{/dashboard/plugins/mohithg-switchery/dist/switchery.min.js}"></script>
+<script th:src="@{/dashboard/dist/js/theme.min.js}"></script>
+<script async th:src="@{/dashboard/plugins/sweetalert/sweetalert2.all.min.js}"></script>
+<script async th:src="@{/dashboard/plugins/sweetalert/sweetalerts.min.js}"></script>
+<!--<script th:src="@{/dashboard/js/form-advanced.js}"></script>-->
+<script th:src="@{/dashboard/plugins/toastr/toastr.min.js}"></script>
+<script th:src="@{/dashboard/plugins/toastr/toastr.js}"></script>
+<!-- Initialize Summernote -->
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 300,
+            placeholder: 'History body here...',
+            tabsize: 2
+        });
+    });
+</script>
+
+<script>
+    // $('#historyForm').on('submit', function (e) {
+    //     e.preventDefault(); // Prevent form from submitting the traditional way
+	//
+	// 	const username = $('#currentUser').val();
+	// 	let userID = null;
+	//
+	//
+	// 	$.ajax({
+	// 		url: "/api/histories/get-email", // Backend endpoint
+	// 		type: "POST",
+	// 		contentType: "application/json",
+	// 		data: JSON.stringify({ email: username }), // Send email to backend
+	// 		success: function (response) {
+	// 			if (response.id) {
+	// 				userID = response.id;
+	// 				console.log("User ID retrieved: " + userID);
+	// 				// Perform further actions with userID if needed
+	// 			} else {
+	// 				console.warn("No ID found in response. Please try again.");
+	// 			}
+	// 		},
+	// 		error: function (xhr, status, error) {
+	// 			console.error("Error retrieving user ID:", status, error);
+	// 			// Optional: Redirect to login if session might have expired
+	// 			// window.location.href = "/authentication?login";
+	// 		}
+	// 	});
+	//
+	//
+	//
+	// 	$('.loading-page').removeClass('d-none');
+    //     const tags = [];
+    //     $('.tag-container .tag').each(function() {
+    //         tags.push($(this).text().trim().substring(this.length - 1));
+    //     });
+	//
+	//
+	//
+    //     const formData = {
+    //         hastTags: tags,  // Send tags as an array
+    //         historyTitle: $('#historyTitle').val().trim(),
+    //         historyCategory: $('#historyCategory').val().trim(),
+    //         historyAuthor: $('#historyAuthor').val().trim(),
+    //         moreInfos: $('#moreInfos').val().trim(),
+    //         historyContent: $('#summernote').val(),
+	// 		storyCaption: $('#storyCaption').val().trim(),
+	// 		storyPhotoGrapherName: $('#storyPhotoGrapherName').val().trim(),
+	// 		storyWhatsAppLink: $('#storyWhatsAppLink').val().trim(),
+	// 		storyFacebookLink: $('#storyFacebookLink').val().trim(),
+	// 		storyInstagramLink: $('#storyInstagramLink').val().trim(),
+	// 		storyTwitterLink: $('#storyTwitterLink').val().trim(),
+	// 		storyYoutubeLink: $('#storyYoutubeLink').val().trim(),
+	// 		storyTiktokLink: $('#storyTiktokLink').val().trim(),
+	// 		postedBy: { id: userID }
+    //     };
+	//
+	// 	console.log("the submitted data is ::" + formData.postedBy.id);
+	//
+    //     // Handle the image file
+    //     const fileInput = document.getElementById('historyMainImage');
+    //     const file = fileInput.files[0];
+	//
+    //     if (file) {
+    //         const reader = new FileReader();
+	//
+    //         reader.onloadend = function () {
+    //             // Convert the image to base64
+    //             const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+    //             formData.historyMainImage = base64String;
+	//
+    //             // Send Ajax request with JSON data
+    //             $.ajax({
+    //                 url: '/api/histories/create',  // Backend URL
+    //                 type: 'POST',
+    //                 data: JSON.stringify(formData),
+    //                 processData: false,
+    //                 contentType: 'application/json',
+    //                 success: function (response) {
+    //                     $('.loading-page').addClass('d-none');
+    //                     toastr.success('History created successfully');
+    //                     $('#historyForm')[0].reset();
+    //                     $('#summernote').summernote('reset');
+    //                     console.log(response.data);
+    //                 },
+    //                 error: function (err) {
+    //                     toastr.error('Error creating history');
+    //                     console.log(err);
+    //                 }
+    //             });
+    //         };
+	//
+    //         // Read the file and convert it to base64
+    //         reader.readAsDataURL(file);
+    //     } else {
+    //         alert("Please select an image.");
+    //     }
+    // });
+
+
+	$('#historyForm').on('submit', function (e) {
+		e.preventDefault(); // Prevent form from submitting the traditional way
+
+		const username = $('#currentUser').val();
+		$('.loading-page').removeClass('d-none');
+
+		// First AJAX call to retrieve user ID
+		$.ajax({
+			url: "/api/histories/get-email", // Backend endpoint
+			type: "POST",
+			contentType: "application/json",
+			data: JSON.stringify({ email: username }), // Send email to backend
+			success: function (response) {
+				if (response.id) {
+					const userID = response.id;
+					console.log("User ID retrieved: " + userID);
+
+					// Collect tags
+					const tags = [];
+					$('.tag-container .tag').each(function () {
+						tags.push($(this).text().trim().substring(this.length - 1));
+					});
+
+					// Create formData object
+					const formData = {
+						hastTags: tags,  // Send tags as an array
+						storyTitle: $('#historyTitle').val().trim(),
+						historyCategory: $('#historyCategory').val().trim(),
+						storyAuthor: $('#historyAuthor').val().trim(),
+						moreInfos: $('#moreInfos').val().trim(),
+						historyContent: $('#summernote').val(),
+						storyCaption: $('#storyCaption').val().trim(),
+						storyPhotoGrapherName: $('#storyPhotoGrapherName').val().trim(),
+						storyWhatsAppLink: $('#storyWhatsAppLink').val().trim(),
+						storyFacebookLink: $('#storyFacebookLink').val().trim(),
+						storyInstagramLink: $('#storyInstagramLink').val().trim(),
+						storyTwitterLink: $('#storyTwitterLink').val().trim(),
+						storyYoutubeLink: $('#storyYoutubeLink').val().trim(),
+						storyTiktokLink: $('#storyTiktokLink').val().trim(),
+						postedBy: { id: userID }
+					};
+
+					console.log("The submitted data is ::", formData.postedBy.id);
+
+					// Handle the image file
+					const fileInput = document.getElementById('historyMainImage');
+					const file = fileInput.files[0];
+
+					if (file) {
+						const reader = new FileReader();
+
+						reader.onloadend = function () {
+							// Convert the image to base64
+							const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+							formData.historyMainImage = base64String;
+
+							// Send final AJAX request with JSON data
+							$.ajax({
+								url: '/api/histories/create',  // Backend URL
+								type: 'POST',
+								data: JSON.stringify(formData),
+								processData: false,
+								contentType: 'application/json',
+								success: function (response) {
+									$('.loading-page').addClass('d-none');
+									toastr.success('History created successfully');
+									$('#historyForm')[0].reset();
+									$('#summernote').summernote('reset');
+									console.log(response.data);
+								},
+								error: function (err) {
+									$('.loading-page').addClass('d-none');
+									toastr.error('Error creating history');
+									console.error(err);
+								}
+							});
+						};
+
+						// Read the file and convert it to base64
+						reader.readAsDataURL(file);
+					} else {
+						$('.loading-page').addClass('d-none');
+						alert("Please select an image.");
+					}
+				} else {
+					$('.loading-page').addClass('d-none');
+					toastr.error("No ID found in response. Please try again.");
+				}
+			},
+			error: function (xhr, status, error) {
+				$('.loading-page').addClass('d-none');
+				console.error("Error retrieving user ID:", status, error);
+				toastr.error("Failed to retrieve user ID. Please try again.");
+				// Optional: Redirect to login if session might have expired
+				// window.location.href = "/authentication?login";
+			}
+		});
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+	$(document).ready(function() {
+        const $container = $('.tag-container');
+        const $input = $('#tag-input');
+
+        $input.on('keydown', function(e) {
+            if (e.key === 'Enter' && $input.val().trim() !== '') {
+                e.preventDefault();
+                addTag($input.val().trim());
+                $input.val('');
+            }
+        });
+
+        function addTag(tagText) {
+            if ($container.find('.tag').filter(function() {
+                return $(this).text().trim() === tagText;
+            }).length === 0) {
+                const $tag = $('<span class="tag"></span>').text('#'+ tagText);
+                const $close = $('<span class="tag-close">×</span>');
+                $tag.append($close);
+                $container.prepend($tag);
+            }
+        }
+
+        $container.on('click', '.tag-close', function() {
+            $(this).parent().remove();
+        });
+    });
+
+    $(document).on('click', '.story', function(e) {
+        e.preventDefault();
+
+        // Retrieve the history ID from the clicked element's href or data attribute
+        let historyId = $(this).data('history-id');
+
+        // Make sure to pass the correct URL with the historyId
+        $.ajax({
+            url: '/history/' + historyId,  // Pass historyId directly
+            type: 'GET',
+            success: function(response) {
+                console.log("History retrieved:", response);
+                $('#history-details').html(
+                                    '<h2>' + response.historyTitle + '</h2>' +
+
+                                    '<img src="data:image/png;base64,' + response.historyMainImage + '" alt="Main Image" />'+
+
+                                    '<p><strong>Category:</strong> ' + response.historyCategory + '</p>' +
+                                    '<p><strong>Author:</strong> ' + response.historyAuthor + '</p>' +
+                                    '<p>' + response.historyContent + '</p>'
+
+                                );
+            },
+            error: function(xhr, status, error) {
+                console.log("Error retrieving history:", xhr.responseText);
+            }
+        });
+    });
+
+
+	$(document).ready(function() {
+		$('#historyMainImage').on('change', function(event) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				// Show the image preview div and update the image source
+				$('#imagePreview').show();
+				$('#previewImage').attr('src', e.target.result);
+			};
+			// Ensure the image preview is updated every time a new file is selected
+			reader.readAsDataURL(this.files[0]);
+		});
+	});
+</script>
+
+</body>
+</html>

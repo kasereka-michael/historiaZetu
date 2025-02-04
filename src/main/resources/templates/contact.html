@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Include SEO -->
+    <div th:replace="frame/websiteframe/seo :: seo"></div>
+
+    <title>Historia Zetu | about us</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Preload styles -->
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/blog/css/come-css.css}" as="style" type="text/css" >
+    <link rel="stylesheet" th:href="@{/blog/css/about.css}" as="style" type="text/css">
+
+</head>
+
+<body class="d-flex flex-column" style="background-color: #000000; background-image: url('/blog/images/1.webp'); background-repeat: no-repeat; overflow-y: scroll; overflow-x:hidden; background-position: center; background-size: cover;font-size: clamp(12px, 2vw, 16px);">
+<!-- Navbar -->
+<div th:replace="frame/websiteframe/navbar :: website-navbar"></div>
+
+<!-- Contact Form -->
+<div class="container py-5 container-contact-us">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="shadow-lg border-0">
+                <div class="card-header text-center">
+                    <h3 class="mb-0 text-white">Contact Us</h3>
+                    <p class="mb-0 text-light">We’d love to hear from you</p>
+                </div>
+                <div class="card-body p-4 bg-dark form-card">
+                    <form id="contact-form">
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label text-light">Full Name </label>
+                            <input type="text"
+                                   id="name"
+                                   class="form-control bg-dark text-white border-secondary"
+                                   placeholder="Enter your full name"
+                                   required>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-light">Email Address <small> (optional) it will e used to get back to you</small></label>
+                            <input type="email"
+                                   id="email"
+                                   class="form-control bg-dark text-white border-secondary"
+                                   placeholder="Enter your email address"
+                            >
+                        </div>
+
+                        <!-- Message Field -->
+                        <div class="mb-3">
+                            <label for="message" class="form-label text-light">Message</label>
+                            <textarea id="message"
+                                      class="form-control bg-dark text-white border-secondary"
+                                      rows="5"
+                                      placeholder="Write your message here"
+                                      required></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit"
+                                    class="btn btn-block"
+                                    style="background-color: #2a5555; color: white;">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer Section -->
+                <div class="card-footer text-white">
+                    <h5 class="text-center mb-3">Other Ways to Reach Us</h5>
+                    <ul class="list-unstyled text-center">
+                        <li>
+                            <i class="fas fa-envelope text-primary"></i>
+                            <a href="mailto:info@example.com" class="text-white text-decoration-none">info@example.com</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt text-primary"></i>
+                            <a href="tel:+123456789" class="text-white text-decoration-none">+1 234 567 89</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            123 Main Street, City, Country
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end of contac form  -->
+
+
+
+
+<!-- Footer -->
+<footer class=" text-white text-center py-3 mt-5">
+    <p>&copy; 2024 Your Website. All Rights Reserved.</p>
+</footer>
+
+
+<!-- Include Scripts -->
+<div th:replace="frame/websiteframe/script-site-frame :: script"></div>
+<script async th:src="@{/dashboard/plugins/sweetalert/sweetalert2.all.min.js}"></script>
+<script async th:src="@{/dashboard/plugins/sweetalert/sweetalerts.min.js}"></script>
+<script defer th:src="@{/blog/js/navbar.js}"></script>
+<script defer th:src="@{/blog/js/contact_us.js}"></script>
+
+</body>
+</html>

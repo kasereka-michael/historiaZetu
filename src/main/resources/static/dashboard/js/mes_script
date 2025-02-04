@@ -1,0 +1,42 @@
+    // $(document).ready(function() {
+    //     // Collect all input fields in the section
+    //     var inputs = $('#step-1 input, #step-1 textarea');
+    //
+    //     // Function to validate inputs
+    //     function validateInputs() {
+    //         inputs.each(function() {
+    //             var $input = $(this);
+    //             var $formGroup = $input.closest('.form-group');
+    //
+    //             if ($input.val().trim() === '') {
+    //                 $formGroup.css('border', '1px solid red');
+    //             } else {
+    //                 $formGroup.css('border', 'none');
+    //             }
+    //         });
+    //     }
+    //
+    //     // Validate on blur event
+    //     inputs.blur(validateInputs);
+    //
+    //     // Validate on form submission
+    //     $('.btn-navigate-form-step').click(function(e) {
+    //         e.preventDefault();
+    //         validateInputs();
+    //
+    //         // Check if any inputs are empty
+    //         var emptyInputs = inputs.filter(function() {
+    //             return $(this).val().trim() === '';
+    //         });
+    //
+    //         if (emptyInputs.length > 0) {
+    //             alert('Please fill in all required fields.');
+    //         } else {
+    //             // Proceed to next step
+    //             // Add your logic here to move to the next step
+    //         }
+    //     });
+    // });
+    `
+
+
