@@ -1,0 +1,79 @@
+/* Base Styles */
+.story-content {
+    position: relative;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel .slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.fullscreen-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Fullscreen Mode */
+.story-content.fullscreen {
+    max-width: 100%;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .carousel .slide {
+        padding: 10px;
+    }
+
+    .carousel-button {
+        padding: 5px;
+    }
+}
+
+@media (orientation: landscape) {
+    .carousel .slide {
+        padding: 30px;
+    }
+}
