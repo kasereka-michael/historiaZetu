@@ -114,7 +114,7 @@ console.log(stories);
                 <div class="container-history" style="width: 15rem;">
                     <div class="wrapper">
                         <div class="banner-image">
-                            <img src="data:image/png;base64,${story.historyMainImage}" alt="${story.storyTitle}" class="story-photo">
+                            <img src="data:image/png;base64,${story.historyMainImage}" alt="${story.storyTitle}" class="story-photo" loading="lazy">
                         </div>
                         <h3 class="fst-italic lh-1 fs-3 mb-2 welcome-text text-white">
                             ${story.storyTitle?.substring(0,20).concat("...") ?? 'N/A'}
@@ -132,13 +132,13 @@ console.log(stories);
                         </article>
                     </div>
                     <div class="button-wrapper">
-                        <a href="/api/histories/view-story/${story.historyId ?? '#'}" class="btn-voir-plus outline">Voir plus</a>
+                        <a href="/api/histories/view-entire-story/${story.historyId ?? '#'}" class="btn-voir-plus outline">Voir plus</a>
                         <button class="fill like-button d-none" type="button" data-story-id="${story.historyId}">
                             <span class="unlike">
                                 <ion-icon name="heart-outline"></ion-icon>
                             </span>
                         </button>
-                        <ion-icon name="reader"></ion-icon>
+                        <ion-icon  class="reader" style="color:#F6F7FB; font-size: 1rem;" name="reader"></ion-icon>
                         <span class="numbering" id="like-count-${story.historyId}">${story.likesCount ?? 0} Reads</span>
                     </div>
                 </div>

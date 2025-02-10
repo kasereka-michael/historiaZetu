@@ -47,6 +47,7 @@ public class Config {
                                 "/api/subscription/**",
                                 "/blog/images/**",
                                 "/api/contactus",
+                                "api/placeholder/**",
                                 "/api/stories/**",
                                 "/view-story/**",
                                 "/api/histories/view-story/**",

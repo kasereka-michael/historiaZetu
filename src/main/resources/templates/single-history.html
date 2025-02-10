@@ -10,6 +10,14 @@
     <link rel="stylesheet" th:href="@{/blog/css/come-css.css}" as="style" type="text/css" >
     <link rel="stylesheet" th:href="@{/blog/css/blog.css}" as="style" type="text/css">
     <link rel="stylesheet" th:href="@{/blog/css/single-view.css}" as="style" type="text/css">
+<style>
+    .slide-content img {
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+    }
+
+</style>
 
 </head>
 
@@ -21,72 +29,20 @@
 
 <section class="story-container">
 
-
 <!--    where dynamic content will be going-->
 </section>
 
         <!-- tags-->
 <section class="story-section-accessories">
         <div class="story-access-hashtags">
-            <h3>HashTags</h3>
-            <ul>
-                <li><a href="#">#Tag1</a></li>
-                <li><a href="#">#Tag1</a></li>
-                <li><a href="#">#Tag1</a></li>
-                <li><a href="#">#Tag1</a></li>
-                <li><a href="#">#Tag1</a></li>
-                <li><a href="#">#Tag1</a></li>
-                <li><a href="#">#Tag1</a></li>
+            <h3 class="color-light text-left" style="color: #f3f3f3; ">HashTags</h3>
+            <ul class="story-access-hashtags-list">
+<!--                hashtag dynamic-->
             </ul>
             <div class="story-related-hashtags-list">
-                <h3>Related stories</h3>
-                <ul>
-                    <li class="flex min-h-[250px] w-full max-w-md overflow-hidden rounded-lg bg-gray-800 shadow-lg">
-                        <a href="#">
-                        <div class="relative w-full">
-                            <img
-                                    src="/api/placeholder/400/320"
-                                    alt="Card background"
-                                    class="absolute h-full w-full object-cover"
-                            />
-                            <div class="relative z-10 flex h-full flex-col justify-start bg-gradient-to-t from-gray-900/90 to-transparent p-6">
-                                <h3 class="mb-2 text-xl title-related font-bold text-white">Title</h3>
-                                <span class="text-sm w-25 text-gray-300">Category</span>
-                            </div>
-                        </div>
-                        </a>
-                    </li>
-                    <li class="flex min-h-[250px] w-full max-w-md overflow-hidden rounded-lg bg-gray-800 shadow-lg">
-                        <a href="#">
-                            <div class="relative w-full">
-                                <img
-                                        src="/api/placeholder/400/320"
-                                        alt="Card background"
-                                        class="absolute h-full w-full object-cover"
-                                />
-                                <div class="relative z-10 flex h-full flex-col justify-start bg-gradient-to-t from-gray-900/90 to-transparent p-6">
-                                    <h3 class="mb-2 text-xl title-related font-bold text-white">Title</h3>
-                                    <span class="text-sm w-25 text-gray-300">Category</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="flex min-h-[250px] w-full max-w-md overflow-hidden rounded-lg bg-gray-800 shadow-lg">
-                        <a href="#">
-                            <div class="relative w-full">
-                                <img
-                                        src="/api/placeholder/400/320"
-                                        alt="Card background"
-                                        class="absolute h-full w-full object-cover"
-                                />
-                                <div class="relative z-10 flex h-full flex-col justify-start bg-gradient-to-t from-gray-900/90 to-transparent p-6">
-                                    <h3 class="mb-2 text-xl title-related font-bold text-white">Title</h3>
-                                    <span class="text-sm w-25 text-gray-300">Category</span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-
+                <h3 class="color-light" style="color: #f3f3f3; ">Related stories</h3>
+                <ul class="story-related-hashtags-list-items">
+<!--                   related history added dynamically-->
                 </ul>
             </div>
         </div>
@@ -103,134 +59,197 @@
 <!-- Include Scripts -->
 <div th:replace="frame/websiteframe/script-site-frame :: script"></div>
 <script defer th:src="@{/blog/js/navbar.js}"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script defer th:inline="javascript">
     /*<![CDATA[*/
     const storyJson = /*[[${story}]]*/ null;
-    const otherStoryJson = JSON.parse(/*[[${stories}]]*/ '[]');
+    console.log("Story JSON:", storyJson);
 
-    /*]]>*/
-
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-
+    let storyId;  // Declare globally
     $(document).ready(function () {
         if (!storyJson) {
             console.error("No story data available.");
             return;
         }
 
-        let container  = '';
-        container += `
+
+
+        const hashtags = $('.story-access-hashtags-list');
+        storyJson.hastTags.forEach(hashTagContent => {
+            hashtags.append(`<li><a href="#">${hashTagContent.substring(0, hashTagContent.length - 1)}</a></li>`);
+        })
+
+         storyId = storyJson.historyId;
+
+        let container = `
             <div class="story-header">
-                <h1 class="story-title fst-italic lh-1 fs-2 mb-2 welcome-">${storyJson.historyTitle}</h1>
+                <h1 class="story-title fst-italic lh-1 fs-2 mb-2">${storyJson.storyTitle || "Untitled Story"}</h1>
                 <div class="story-info">
-                    <p class="title">Photo by: <strong>${storyJson.storyPhotoGrapherName}</strong></p>
-                    <p class="title" >Story by: <strong>${storyJson.historyAuthor}</strong></p>
-                    <p class="title">Date: <strong>${storyJson.historyDate ? new Date(storyJson.historyDate).toLocaleDateString() : 'Unknown date'}</strong></p>
+                    <p class="title">Photo by: <strong>${storyJson.storyPhotoGrapherName || "Unknown"}</strong></p>
+                    <p class="title">Story by: <strong>${storyJson.historyAuthor || "Anonymous"}</strong></p>
+                    <p class="title">Date: <strong>${storyJson.historyDate ? new Date(storyJson.historyDate).toLocaleDateString() : "Unknown date"}</strong></p>
                 </div>
             </div>
-        `;
 
-        container += `
+            <div class="share-container">
+                <p class="partagé">Partager</p>
+                <a href="#" title="Copy the story" onclick="copyToClipboard('${window.location.href}')">
+                    <ion-icon class="copy" name="copy"></ion-icon>
+                </a>
+                <a title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(storyJson.storyFacebookLink || window.location.href)}" class="share-facebook" target="_blank" rel="noopener noreferrer">
+                    <ion-icon name="logo-facebook"></ion-icon>
+                </a>
+                <a title="Share on Instagram" href="https://www.instagram.com/?url=${encodeURIComponent(storyJson.storyInstagramLink || window.location.href)}" class="share-instagram" target="_blank" rel="noopener noreferrer">
+                    <ion-icon name="logo-instagram"></ion-icon>
+                </a>
+                <a title="Share on WhatsApp" href="https://api.whatsapp.com/send?text=${encodeURIComponent(storyJson.storyWhatsAppLink || window.location.href)}" class="share-whatsapp" target="_blank" rel="noopener noreferrer">
+                    <ion-icon name="logo-whatsapp"></ion-icon>
+                </a>
+            </div>
 
-                <div class="share-container">
-                    <p class="partagé" >Partager </p>
-                    <a href="" title="copy the story">
-                        <ion-icon class="copy" name="copy"></ion-icon>
-                    </a>
+            <img src="${storyJson.historyMainImage ? 'data:image/png;base64,' + storyJson.historyMainImage : 'default-placeholder.jpg'}" alt="${storyJson.historyTitle || 'Story Image'}" class="story-photo" loading="lazy">
 
-                    <a title="share the on facebook" href="https://www.facebook.com/sharer/sharer.php?u=${storyJson.storyFacebookLink}" class="share-facebook" target="_blank" rel="noopener noreferrer">
-                        <ion-icon class="share-facebook" name="logo-facebook"></ion-icon>
-                    </a>
-                    <a  title="share the story on instagram" href="https://www.instagram.com/?url=${storyJson.storyInstagramLink}" class="share-instagram" target="_blank" rel="noopener noreferrer">
-                        <ion-icon class="share-intagram" name="logo-instagram"></ion-icon>
-                    </a>
-                    </a>
-                    <a title="share the story on whatsapp" href="https://api.whatsapp.com/send?text=${storyJson.storyWhatsAppLink}" class="share-whatsapp" target="_blank" rel="noopener noreferrer">
-                        <ion-icon class="share-whatsapp" name="logo-whatsapp"></ion-icon>
-                    </a>
-                </div>
-        `;
+            <div class="story-caption">${storyJson.storyCaption || ""}</div>
 
-        container += `
-                <img src="data:image/png;base64,${storyJson.historyMainImage}" alt="${storyJson.historyTitle}" class="story-photo">
-        `;
-
-        container += `
-
-            <div class="story-caption">${storyJson.storyCaption}</div>
-
-        `;
-
-        container += `
-
-            <div class="story-content ">
-                <!-- Carousel Container -->
-                <div class="carousel">
-                    <!-- Slides will be dynamically inserted here -->
-                </div>
-
-                <!-- Navigation Buttons -->
+            <div class="story-content">
+                <div class="carousel" class="h-50"></div>
                 <button class="carousel-button prev">&#10094;</button>
                 <button class="carousel-button next">&#10095;</button>
-
-                <!-- Fullscreen Button -->
                 <button class="fullscreen-button">&#x26F6;</button>
             </div>
+
+            <div class="story-stats">
+                <span><ion-icon name="reader"></ion-icon> Readers: ${storyJson.readCount || 0}</span>
+                <span><ion-icon name="heart"></ion-icon> Likes: ${storyJson.likeCount || 0}</span>
+                <span><ion-icon name="share-social"></ion-icon> Shared: ${storyJson.shareCount || 0}</span>
+                <span><ion-icon name="chatbubbles"></ion-icon> Comments: ${storyJson.commentCount || 0}</span>
+            </div>
+
+            <div class="next-prev-btn">
+                <button class="btn-prev"><ion-icon name="arrow-back"></ion-icon> Prev</button>
+                <button class="btn-next">Next <ion-icon name="arrow-forward"></ion-icon></button>
+            </div>
+
+            <div class="comment-box">
+                <textarea placeholder="Leave a comment..."></textarea>
+                <button type="button" class="btn-primary">Post Comment</button>
+            </div>
+            <div class="comments-list"></div>
         `;
 
+        $('.story-container').html(container);
 
-        // Example dynamic content (replace with your string or fetch from an API)
+        function splitContentIntoSlides(content, maxLines = 5, fontSize = "16px") {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = content;
+            document.body.appendChild(tempDiv);
+            tempDiv.style.visibility = "hidden";
+            tempDiv.style.position = "absolute";
+            tempDiv.style.width = "80%"; // Ensure width matches actual rendering
+            tempDiv.style.lineHeight = "1.5"; // Normal line-height for text
 
-        const slideLength = 200; // Number of characters per slide (you can adjust this)
+            let slides = [];
+            let currentSlide = document.createElement("div");
+            currentSlide.className = "slide-content";
+            let currentHeight = 0;
 
-        // Split the content into slides based on the specified length
-        const slides = [];
-        for (let i = 0; i < storyJson.historyContent.length; i += slideLength) {
-            slides.push(storyJson.historyContent.slice(i, i + slideLength));
+            // Get the computed line height of the content
+            let lineHeight = parseFloat(getComputedStyle(tempDiv).lineHeight); // Use actual line height
+            let maxHeight = maxLines * lineHeight; // Set maxHeight for slide
+
+            // Helper function to push the current slide and reset it
+            function pushSlide() {
+                if (currentSlide.children.length > 0) {
+                    slides.push(currentSlide.outerHTML);
+                    currentSlide = document.createElement("div");
+                    currentSlide.className = "slide-content";
+                }
+            }
+
+            Array.from(tempDiv.childNodes).forEach(node => {
+                if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
+                    // Create corresponding element based on node type
+                    let element = document.createElement(node.nodeType === Node.TEXT_NODE ? "p" : node.tagName);
+                    element.innerHTML = node.nodeType === Node.TEXT_NODE ? node.textContent.trim() : node.innerHTML;
+                    element.style.textAlign = "justify"; // Justify the text
+                    element.style.fontSize = fontSize; // Apply the font size change
+
+                    // If it's a title (like h1, h2), we check if it fits within the slide
+                    if (node.tagName && node.tagName.toLowerCase().startsWith('h')) {
+                        // Check if adding the title would exceed the slide height
+                        let titleHeight = lineHeight * 2; // Assume title takes more space than text
+                        let newHeight = currentHeight + titleHeight;
+
+                        if (newHeight > maxHeight) {
+                            pushSlide(); // If exceeded, push current slide before adding the title
+                            currentHeight = titleHeight; // Reset current height for title
+                        } else {
+                            currentHeight += titleHeight; // Add title height to the current slide
+                        }
+
+                        currentSlide.appendChild(element); // Append the title
+                        return; // Skip the normal content handling for titles
+                    }
+
+                    // Check if adding the element would exceed the height of the current slide
+                    let newHeight = currentHeight + lineHeight; // Add the normal line height for text
+                    if (newHeight > maxHeight) {
+                        pushSlide(); // If exceeded, push the current slide and start a new one
+                        currentHeight = lineHeight; // Reset height for new slide
+                    }
+
+                    // Append the element to the current slide
+                    currentSlide.appendChild(element);
+                    currentHeight += lineHeight;
+                }
+
+                // Handle images by centering them and placing them in their own slide
+                if (node.tagName === 'IMG') {
+                    pushSlide(); // Push the current slide before adding the image
+                    // Create a div to center the image and push it as its own slide
+                    slides.push(`<div class="slide-content" style="text-align: center;">${node.outerHTML}</div>`);
+                }
+            });
+
+            // Push the last slide if it contains any content
+            pushSlide();
+
+            document.body.removeChild(tempDiv);
+            return slides;
         }
 
-        // Dynamically create slides
+// Usage Example:
+        let slides = splitContentIntoSlides(storyJson.historyContent, 5, "18px");
+
+
         const $carousel = $('.carousel');
-        slides.forEach((slideContent, index) => {
-            $carousel.append(`<div class="slide"><h2>Slide ${index + 1}</h2><p>${slideContent}</p></div>`);
+
+        slides.forEach(slideContent => {
+            $carousel.append(`<div class="slide">${slideContent}</div>`);
         });
 
         let currentIndex = 0;
 
-        // Function to update carousel position
         function updateCarousel() {
             const offset = -currentIndex * 100;
             $carousel.css('transform', `translateX(${offset}%)`);
         }
 
-        // Navigation Buttons
         $('.carousel-button.prev').on('click', function () {
-            if (currentIndex > 0) {
-                currentIndex--;
-            } else {
-                currentIndex = slides.length - 1;
-            }
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
             updateCarousel();
         });
 
         $('.carousel-button.next').on('click', function () {
-            if (currentIndex < slides.length - 1) {
-                currentIndex++;
-            } else {
-                currentIndex = 0;
-            }
+            currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
             updateCarousel();
         });
 
-        // Fullscreen Mode
         $('.fullscreen-button').on('click', function () {
             const $storyContent = $('.story-content');
             if (!document.fullscreenElement) {
                 $storyContent[0].requestFullscreen().catch(err => {
-                    alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+                    alert(`Error enabling fullscreen mode: ${err.message}`);
                 });
                 $storyContent.addClass('fullscreen');
             } else {
@@ -239,58 +258,65 @@
             }
         });
 
-        // Handle Fullscreen Change
         $(document).on('fullscreenchange', function () {
             if (!document.fullscreenElement) {
                 $('.story-content').removeClass('fullscreen');
             }
         });
 
-
-        container += `
-
-            <div class="story-stats">
-                <span><ion-icon name="reader"></ion-icon>${storyJson.likeCount}: 123</span>
-                <span><ion-icon name="heart"></ion-icon> Likes: 456</span>
-                <span><ion-icon name="share-social"></ion-icon> shared: 456</span>
-                <span><ion-icon name="chatbubbles"></ion-icon> ${storyJson.commentCount}: 789</span>
-            </div>
-
-        `;
-
-        container += `
-            <div class="next-prev-btn">
-                <button class="btn-prev"> <ion-icon name="arrow-back"></ion-icon>prev</button>
-                <button class="btn-next">next <ion-icon name="arrow-forward"></ion-icon></button>
-            </div>
-
-        `;
-
-
-        container += `
-            <div class="comment-box">
-                <textarea placeholder="Leave a comment..."></textarea>
-                <button type="button btn-primary">Post Comment</button>
-            </div>
-            <div class="comments-list">
-                <div class="comment">
-                    <p class="comment-author">User1</p>
-                    <p class="comment-text">This is a comment text.</p>
-                    <p class="comment-date">Posted on: MM/DD/YYYY</p>
-                </div>
-                <div class="comment">
-                    <p class="comment-author">User2</p>
-                    <p class="comment-text">This is another comment text.</p>
-                    <p class="comment-date">Posted on: MM/DD/YYYY</p>
-                </div>
-            </div>
-        `;
-
-     $('story-container').html(container);
-        // Initialize the carousel
-        updateCarousel();
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Story URL copied to clipboard!");
+            }).catch(err => {
+                console.error("Failed to copy: ", err);
+            });
+        }
     });
 
+
+
+
+
+
+    const otherStoryJson = JSON.parse(/*[[${stories}]]*/ '[]');
+
+    const relatedStories = $('.story-related-hashtags-list-items');
+
+    otherStoryJson.forEach(otherStory => {
+        // Skip the current iteration if the IDs match
+        if (storyId !== otherStory.historyId) {
+            return; // Use return instead of continue
+        }
+
+
+        relatedStories.append(`
+        <li class="flex flex-wrap max-w-md w-full overflow-hidden rounded-lg bg-gray-800 shadow-lg">
+            <a href="/api/histories/view-entire-story/${otherStory.historyId ?? '#'}">
+                <div class="relative w-full h-40"> <!-- Adjust height here -->
+                    <img
+                        src="${otherStory.historyMainImage ? 'data:image/png;base64,' + otherStory.historyMainImage : 'default-placeholder.jpg'}"
+                        alt="${otherStory.historyTitle || 'Story Image'}"
+                        class="absolute top-0 left-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                    />
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900/90 to-transparent p-6 flex flex-col justify-start z-10">
+                        <h3 class="mb-2 text-xl title-related font-bold text-white">${otherStory.storyTitle}</h3>
+                        <span class="text-sm text-gray-300">${otherStory.historyCategory}</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+    `);
+    });
+
+
+
+    /*]]>*/
+
+</script>
+
+
+<script>
 
 </script>
 

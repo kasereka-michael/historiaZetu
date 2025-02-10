@@ -26,7 +26,6 @@ p {
     background-size: cover;
 }
 .carousel-caption {
-    /* bottom: 270px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,4 +57,50 @@ canvas {
     height: 100vh;
     overflow: hidden;
     width: 100%;
+}
+
+/* Media query for small devices */
+@media (max-width: 768px) {
+    .carousel-item {
+        height: 100dvh;
+        margin-top: 10px;/* Adjust height for smaller screens */
+    }
+
+}
+
+/* Media query for extra small devices (phones) */
+@media (max-width: 480px) {
+    .carousel-item {
+        height: 50vh;
+        margin-top: 5px;/* Further reduce the height for very small screens */
+    }
+}
+
+
+/* Media query for smaller devices */
+@media (max-width: 768px) {
+    .carousel-caption h5 {
+        font-size: 30px; /* Adjust font size for smaller screens */
+        margin-top: 15px;
+    }
+
+    .carousel-caption p {
+        width: 90%; /* Increase width of text on smaller screens */
+        font-size: 16px; /* Adjust font size for readability */
+        line-height: 1.6; /* Adjust line-height for smaller screens */
+    }
+}
+
+/* Media query for extra small devices (phones) */
+@media (max-width: 480px) {
+    .carousel-caption h5 {
+        font-size: 24px; /* Further adjust font size for very small screens */
+        margin-top: 10px;
+    }
+
+    .carousel-caption p {
+        width: 95%; /* Make text width almost full on very small screens */
+        font-size: 14px; /* Reduce font size for very small screens */
+        line-height: 1.5; /* Adjust line-height */
+    }
 }

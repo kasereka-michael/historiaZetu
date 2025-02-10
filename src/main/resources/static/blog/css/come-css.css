@@ -8,7 +8,13 @@ h2 {
 h3 {
     font-size: clamp(15px, 1.3vw, 30px); /* Min: 18px, Preferred: 2.5vw, Max: 30px */
 }
-
+.icon-inner{
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: #fff !important;
+    font-size: 1.3rem !important;
+}
 button {
     font-size: clamp(12px, 1.5vw, 16px); /* Min: 12px, Preferred: 1.5vw, Max: 16px */
 }
