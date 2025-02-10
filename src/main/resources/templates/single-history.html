@@ -40,7 +40,7 @@
 <!--                hashtag dynamic-->
             </ul>
             <div class="story-related-hashtags-list">
-                <h3 class="color-light" style="color: #f3f3f3; ">Related stories</h3>
+<!--                <h3 class="color-light" style="color: #f3f3f3; ">Related stories</h3>-->
                 <ul class="story-related-hashtags-list-items">
 <!--                   related history added dynamically-->
                 </ul>
@@ -86,7 +86,7 @@
                 <h1 class="story-title fst-italic lh-1 fs-2 mb-2">${storyJson.storyTitle || "Untitled Story"}</h1>
                 <div class="story-info">
                     <p class="title">Photo by: <strong>${storyJson.storyPhotoGrapherName || "Unknown"}</strong></p>
-                    <p class="title">Story by: <strong>${storyJson.historyAuthor || "Anonymous"}</strong></p>
+                    <p class="title">Story by: <strong>${storyJson.storyAuthor || "Anonymous"}</strong></p>
                     <p class="title">Date: <strong>${storyJson.historyDate ? new Date(storyJson.historyDate).toLocaleDateString() : "Unknown date"}</strong></p>
                 </div>
             </div>
@@ -131,10 +131,14 @@
             </div>
 
             <div class="comment-box">
-                <textarea placeholder="Leave a comment..."></textarea>
+                <input type="hidden" id="storyId" value="${storyJson.historyId}">
+                <textarea placeholder="Leave a comment..." id="commentField"></textarea>
                 <button type="button" class="btn-primary">Post Comment</button>
             </div>
-            <div class="comments-list"></div>
+
+            <div class="comments-list">
+
+            </div>
         `;
 
         $('.story-container').html(container);
@@ -283,25 +287,25 @@
     const relatedStories = $('.story-related-hashtags-list-items');
 
     otherStoryJson.forEach(otherStory => {
-        // Skip the current iteration if the IDs match
-        if (storyId !== otherStory.historyId) {
-            return; // Use return instead of continue
-        }
-
 
         relatedStories.append(`
         <li class="flex flex-wrap max-w-md w-full overflow-hidden rounded-lg bg-gray-800 shadow-lg">
             <a href="/api/histories/view-entire-story/${otherStory.historyId ?? '#'}">
-                <div class="relative w-full h-40"> <!-- Adjust height here -->
+                <div class="relative w-full d-flex" style="height: 10rem; justify-content: center; align-items: center; position: relative;" > <!-- Adjust height here -->
                     <img
                         src="${otherStory.historyMainImage ? 'data:image/png;base64,' + otherStory.historyMainImage : 'default-placeholder.jpg'}"
                         alt="${otherStory.historyTitle || 'Story Image'}"
                         class="absolute top-0 left-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                         loading="lazy"
+                        style="height: inherit"
                     />
-                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900/90 to-transparent p-6 flex flex-col justify-start z-10">
-                        <h3 class="mb-2 text-xl title-related font-bold text-white">${otherStory.storyTitle}</h3>
-                        <span class="text-sm text-gray-300">${otherStory.historyCategory}</span>
+                    <div class="absolute top-5 left-0 w-full h-full bg-gradient-to-t from-gray-900/90 to-transparent p-6 flex flex-col justify-start z-10" style="position: absolute; top:40%; left:10px;">
+                        <h5 class="mb-2 text-xl title-related font-bold text-white">${otherStory.storyTitle.substring(0, 20).concat("...")}</h5>
+
+                        <div class="d-flex flex-column" style="background-color: rgb(255,255,255);">
+                            <span>Category : <span class="text-sm text-gray-300">${otherStory.historyCategory}</span></span>
+                            <span>Posted on : <span class="text-sm text-gray-300">${otherStory.historyDate ? new Date(otherStory.historyDate).toLocaleDateString() : "Unknown date"}</span></span>
+                        </div>
                     </div>
                 </div>
             </a>
@@ -309,15 +313,144 @@
     `);
     });
 
-
-
     /*]]>*/
-
 </script>
 
 
 <script>
+    let username;
+    $(document).ready(function() {
+        let storyId = $("#storyId").val();
 
+        const savedEmail = localStorage.getItem("subscribedEmail"); // Globally save email in localStorage
+
+        if (savedEmail) {
+            checkSubscriptionStatus(savedEmail);
+        }
+
+        function checkSubscriptionStatus(email) {
+            $.ajax({
+                url: "/api/subscription/status", // Backend endpoint to check subscription
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ email: email }), // Send email to the backend
+                success: function (response) {
+                    if (response.isSubscribed) {
+                        // Hide all forms globally if subscribed
+                      username = savedEmail;
+
+                    } else {
+                        localStorage.removeItem("subscribedEmail");
+                    }
+                },
+                error: function () {
+                    console.log("Failed to check subscription status. Please try again later.");
+                }
+            });
+        }
+
+
+        // Function to load comments
+        function loadComments() {
+            $.ajax({
+                url: `/api/comments/${storyId}`, // Adjust backend API URL
+                type: "GET",
+                success: function(comments) {
+                    let commentsHtml = "";
+                    comments.forEach(comment => {
+                        commentsHtml += generateCommentHtml(comment);
+                    });
+                    $(".comments-list").html(commentsHtml);
+                },
+                error: function() {
+                    console.error("Failed to load comments.");
+                }
+            });
+        }
+
+        // Generate comment HTML structure (Recursively for nested replies)
+        function generateCommentHtml(comment) {
+            return `
+            <div class="comment" data-id="${comment.commentId}" style="margin-left: ${comment.parentComment ? '30px' : '0px'};">
+                <p>${comment.commentContent}</p>
+                <small>Posted on: ${new Date(comment.commentDate).toLocaleString()}</small>
+                <button class="reply-btn">Reply</button>
+                <div class="reply-box" style="display:none;">
+                    <textarea class="reply-field" placeholder="Write a reply..."></textarea>
+                    <button class="submit-reply btn-primary">Reply</button>
+                </div>
+                <div class="replies">
+                    ${comment.subComments.map(sub => generateCommentHtml(sub)).join('')}
+                </div>
+            </div>`;
+        }
+
+        // Handle posting a new comment
+        $("#postComment").click(function() {
+            let commentContent = $("#commentField").val().trim();
+            if (!commentContent) {
+                alert("Please enter a comment.");
+                return;
+            }
+
+            $.ajax({
+                url: "/api/comments",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    history: {
+                        historyId: storyId
+                    },
+                    commentContent: commentContent,
+                    commenterEmail: username,
+                }),
+                success: function(response) {
+                    $("#commentField").val(""); // Clear textarea
+                    loadComments(); // Reload comments
+                },
+                error: function() {
+                    alert("Failed to post comment.");
+                }
+            });
+        });
+
+        // Handle reply button click (show reply field)
+        $(document).on("click", ".reply-btn", function() {
+            $(this).siblings(".reply-box").toggle(); // Show or hide reply box
+        });
+
+        // Handle submitting a reply
+        $(document).on("click", ".submit-reply", function() {
+            let replyField = $(this).siblings(".reply-field");
+            let replyContent = replyField.val().trim();
+            let parentCommentId = $(this).closest(".comment").data("id");
+
+            if (!replyContent) {
+                alert("Please enter a reply.");
+                return;
+            }
+
+            $.ajax({
+                url: "/api/comments/reply",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    historyId: storyId,
+                    commentContent: replyContent,
+                    parentCommentId: parentCommentId
+                }),
+                success: function(response) {
+                    loadComments(); // Reload comments to show the reply
+                },
+                error: function() {
+                    alert("Failed to post reply.");
+                }
+            });
+        });
+
+        // Load comments on page load
+        loadComments();
+    });
 </script>
 
 

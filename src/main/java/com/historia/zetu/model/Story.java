@@ -1,7 +1,5 @@
 package com.historia.zetu.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,7 +32,11 @@ public class Story {
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<Likes> likes = new ArrayList<>();
+    private List<Reads> reads = new ArrayList<>();
+
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Shares> shares = new ArrayList<>();
 
     @Transient
     private long likesCount;
@@ -64,8 +66,12 @@ public class Story {
     @JoinColumn(name = "id")
     private Users postedBy;
 
-    public long getLikesCount() {
-        return (likes != null) ? likes.size() : 0;
+    public long getReadsCount() {
+        return (reads != null) ? reads.size() : 0;
+    }
+
+    public long getSharesCount() {
+        return (shares != null) ? shares.size() : 0;
     }
 
 

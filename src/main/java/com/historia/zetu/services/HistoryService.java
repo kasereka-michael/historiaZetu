@@ -1,6 +1,7 @@
 package com.historia.zetu.services;
 
 import com.historia.zetu.model.Story;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 
 
@@ -24,7 +25,14 @@ public interface HistoryService {
     Page<Story> getStories(int page, int size, String searchTerm);
 
     long findUserEmail(String email);
-    Map<String, Object> toggleLike(Long storyId, String username);
+    Map<String, Object> toggleRead(Long storyId, String username);
     boolean checkUserNameHistoryLike(Long storyId, String username);
 
+    // Method to toggle like/unlike
+    @Transactional
+    Map<String, Object> toggleShares(Long storyId, String username);
+
+    // Method to toggle like/unlike
+    @Transactional
+    Map<String, Object> toggleShares(Long storyId);
 }

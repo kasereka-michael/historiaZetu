@@ -5,10 +5,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @Entity
-public class Likes {
+@Table(name = "read_records")
+public class Reads {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +21,9 @@ public class Likes {
     @JoinColumn(name = "history_Id")
     @JsonBackReference
     private Story story;
-
+    private String sessionId;
+    private String ipAddress;
+    private LocalDateTime createdAt;
     private String username;
 
 }

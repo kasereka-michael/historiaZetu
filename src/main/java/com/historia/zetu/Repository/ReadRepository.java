@@ -1,11 +1,11 @@
 package com.historia.zetu.Repository;
 
-import com.historia.zetu.model.Likes;
+import com.historia.zetu.model.Reads;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LikeRepository extends JpaRepository<Likes, Long> {
+public interface ReadRepository extends JpaRepository<Reads, Long> {
     // Check if the user has already liked the story
     boolean existsByStoryHistoryIdAndUsername(Long storyId, String username);
 

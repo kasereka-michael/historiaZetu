@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.historia.zetu.model.Comments;
@@ -21,7 +22,6 @@ import org.apache.commons.net.util.SubnetUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -38,7 +38,7 @@ public class StoryController {
     private final HistoryServiceImpl historyService;
     private final RestTemplate restTemplate;
     private final ReaderServiceImpl readerService;
-    private final CommentsServiceImpl comments;
+    private final CommentsServiceImpl commentService;
 
 
 
@@ -153,11 +153,11 @@ public class StoryController {
         log.info("Received parentCommentId: " + parentCommentId);
 
         if (parentCommentId != null) {
-            Comments parentComment = comments.getCommentById(parentCommentId);
+            Comments parentComment = commentService.getCommentById(parentCommentId);
             newComment.setParentComment(parentComment);
         }
 
-        boolean result = comments.saveComment(newComment);
+        boolean result = commentService.saveComment(newComment);
         if (result) {
             return created(URI.create("")).body(
                     HttpResponse.builder()
@@ -273,7 +273,7 @@ public class StoryController {
             }
 
             // Call the service to toggle like/unlike and get the updated status and likes count
-            Map<String, Object> likeResponse = historyService.toggleLike(storyId, username);
+            Map<String, Object> likeResponse = historyService.toggleRead(storyId, username);
 
             // Return the response as a HashMap
             return ResponseEntity.ok(likeResponse);
@@ -289,6 +289,19 @@ public class StoryController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while processing your like/unlike request.");
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<Comments> postComment(@RequestBody Comments commentDto) {
+        commentDto.setCommentContent(commentDto.getCommentContent());
+        commentDto.setCommenterEmail(commentDto.getCommenterEmail());
+        commentDto.setCommentDate(LocalDateTime.now());
+        commentDto.setHistory(commentDto.getHistory());
+        // Call the service to save the comment
+        Comments savedComment = comments.(commentDto);
+
+        // Return the saved comment as a response
+        return ResponseEntity.ok(savedComment);
     }
 
 
@@ -320,6 +333,21 @@ public class StoryController {
                     .body("An error occurred while processing your like/unlike request.");
         }
     }
+
+
+
+//    @PostMapping
+//    public String trackStoryRead(@RequestParam Long storyId,
+//                                 @RequestParam(required = false) Long userId,
+//                                 @RequestHeader(value = "User-Agent") String userAgent,
+//                                 HttpServletRequest request) {
+//        String sessionId = request.getSession().getId();
+//        String ipAddress = request.getRemoteAddr();
+//
+//        boolean saved = storyReadService.saveStoryRead(userId, storyId, sessionId, ipAddress);
+//
+//        return saved ? "Story read recorded" : "Already recorded";
+//    }
 
 
 }

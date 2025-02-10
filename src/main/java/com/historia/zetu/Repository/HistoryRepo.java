@@ -35,7 +35,8 @@ public interface HistoryRepo extends JpaRepository<Story, Long> {
 
     Page<Story> findAllByHistoryCategory(Pageable pageable, String category);
 
-    @Query("SELECT s FROM Story s WHERE s.historyCategory = :category AND s.id <> :id")
-    Page<Story> findByHistoryCategoryAndIdNot(@Param("category") String category, @Param("id") long id, Pageable pageable);
+    @Query("SELECT s FROM Story s WHERE s.historyCategory = :category AND s.historyId <> :id")
+    Page<Story> findByHistoryCategoryAndHistoryIdNot(@Param("category") String category, @Param("id") Long id, Pageable pageable);
+
 
 }

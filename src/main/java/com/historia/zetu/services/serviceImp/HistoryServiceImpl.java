@@ -1,9 +1,10 @@
 package com.historia.zetu.services.serviceImp;
 
 import com.historia.zetu.Repository.HistoryRepo;
-import com.historia.zetu.Repository.LikeRepository;
+import com.historia.zetu.Repository.ReadRepository;
+import com.historia.zetu.Repository.ShareRepository;
 import com.historia.zetu.Repository.UserRepo;
-import com.historia.zetu.model.Likes;
+import com.historia.zetu.model.Reads;
 import com.historia.zetu.model.Story;
 import com.historia.zetu.model.Users;
 import com.historia.zetu.services.HistoryService;
@@ -25,9 +26,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class HistoryServiceImpl implements HistoryService {
+
     private final HistoryRepo historyRepo;
     private final UserRepo userRepo;
-    private final LikeRepository likeRepository;
+    private final ReadRepository readRepository;
+    private final ShareRepository shareRepository;
+
     @Override
     public Story saveHistory(Story history) {
 
@@ -104,33 +108,33 @@ public class HistoryServiceImpl implements HistoryService {
     // Method to toggle like/unlike
     @Override
     @Transactional
-    public Map<String, Object> toggleLike(Long storyId, String username) {
+    public Map<String, Object> toggleRead(Long storyId, String username) {
         // Find the story by ID
         Story story = historyRepo.findById(storyId)
                 .orElseThrow(() -> new RuntimeException("Story not found"));
 
-        log.info("The story retrieved :: {}", story.getLikesCount());
+        log.info("The story retrieved :: {}", story.getReadsCount());
 
         // Check if the user has already liked the story
-        boolean hasLiked = likeRepository.existsByStoryHistoryIdAndUsername(storyId, username);
+        boolean hasLiked = readRepository.existsByStoryHistoryIdAndUsername(storyId, username);
 
         if (hasLiked) {
             // If the user has already liked the story, remove the like
-            likeRepository.deleteByStoryHistoryIdAndUsername(storyId, username);
-            story.setLikesCount(story.getLikesCount() - 1);
+            readRepository.deleteByStoryHistoryIdAndUsername(storyId, username);
+            story.setLikesCount(story.getReadsCount() - 1);
         } else {
             // If the user hasn't liked the story, add a like
-            Likes like = new Likes();
+            Reads like = new Reads();
             like.setStory(story);
             like.setUsername(username);
-            likeRepository.save(like);
-            story.setLikesCount(story.getLikesCount() + 1);
+            readRepository.save(like);
+            story.setLikesCount(story.getReadsCount() + 1);
         }
 
         // Prepare the response map
         Map<String, Object> response = new HashMap<>();
-        response.put("hasLiked", hasLiked); // New like status after toggling
-        response.put("likeCount", story.getLikesCount());
+        response.put("hasRead", hasLiked); // New like status after toggling
+        response.put("ReadCount", story.getReadsCount());
 
         return response;
     }
@@ -138,7 +142,17 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     public boolean checkUserNameHistoryLike(Long storyId, String username) {
-       return likeRepository.existsByStoryHistoryIdAndUsername(storyId, username);
+       return readRepository.existsByStoryHistoryIdAndUsername(storyId, username);
+    }
+
+    @Override
+    public Map<String, Object> toggleShares(Long storyId, String username) {
+        return Map.of();
+    }
+
+    @Override
+    public Map<String, Object> toggleShares(Long storyId) {
+        return Map.of();
     }
 
     public Page<Story> getStoriesRelated(int page, int size, long id) {
@@ -150,12 +164,10 @@ public class HistoryServiceImpl implements HistoryService {
             String category = story.getHistoryCategory();
 
             // Fetch only a paginated set of related stories from DB (excluding the current story)
-            Page<Story> storiesPage = historyRepo.findByHistoryCategoryAndIdNot(category, id, pageable);
+            Page<Story> storiesPage = historyRepo.findByHistoryCategoryAndHistoryIdNot(category, id, pageable);
 
             // Combine the main story with related paginated stories
-            List<Story> finalStories = new ArrayList<>();
-            finalStories.add(story); // Add the current story first
-            finalStories.addAll(storiesPage.getContent()); // Add paginated related stories
+            List<Story> finalStories = new ArrayList<>(storiesPage.getContent()); // Add paginated related stories
 
             // Create a new paginated response
             return new PageImpl<>(finalStories, pageable, storiesPage.getTotalElements() + 1);
@@ -164,6 +176,67 @@ public class HistoryServiceImpl implements HistoryService {
         return Page.empty();
     }
 
+
+//    @Transactional
+//    public boolean saveStoryRead(Long userId, Long storyId, String sessionId, String ipAddress) {
+//        Optional<StoryRead> existingRead;
+//
+//        if (userId != null) {
+//            existingRead = storyReadRepository.findByUserIdAndStoryId(userId, storyId);
+//        } else {
+//            existingRead = storyReadRepository.findBySessionIdAndStoryId(sessionId, storyId);
+//        }
+//
+//        if (existingRead.isPresent()) {
+//            return false; // User has already read the story
+//        }
+//
+//        StoryRead storyRead = new StoryRead();
+//        storyRead.setUser(userId != null ? new User(userId) : null);
+//        storyRead.setStory(new Story(storyId));
+//        storyRead.setSessionId(sessionId);
+//        storyRead.setIpAddress(ipAddress);
+//        storyRead.setCreatedAt(LocalDateTime.now());
+//
+//        storyReadRepository.save(storyRead);
+//        return true; // Successfully saved
+//    }
+
+
+
+    // Method to toggle like/unlike
+//    @Transactional
+//    @Override
+//    public Map<String, Object> toggleShares(Long storyId) {
+//        // Find the story by ID
+//        Story story = historyRepo.findById(storyId)
+//                .orElseThrow(() -> new RuntimeException("Story not found"));
+//
+//        log.info("The story retrieved :: {}", story.getReadsCount());
+//
+//        // Check if the user has already liked the story
+//        boolean hasRead = shareRepository.existsByStoryHistoryId(storyId);
+//
+//        if (hasRead) {
+//            // If the user has already liked the story, remove the like
+//            readRepository.deleteByStoryHistoryIdAndUsername(storyId, username);
+//            story.setLikesCount(story.getReadsCount() - 1);
+//        } else {
+//            // If the user hasn't liked the story, add a like
+//            Reads like = new Reads();
+//            like.setStory(story);
+//            like.setUsername(username);
+//            readRepository.save(like);
+//            story.setLikesCount(story.getReadsCount() + 1);
+//        }
+//
+//        // Prepare the response map
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("hasRead", hasLiked); // New like status after toggling
+//        response.put("ReadCount", story.getReadsCount());
+//
+//        return response;
+//    }
 
 
 
