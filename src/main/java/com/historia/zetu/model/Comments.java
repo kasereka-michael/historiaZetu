@@ -30,8 +30,8 @@ public class Comments {
     @JsonManagedReference
     private List<Comments> subComments = new ArrayList<>();
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "history_id")
     private Story history;
     private String commenterEmail;
-    private String commenterWebsite;
 }

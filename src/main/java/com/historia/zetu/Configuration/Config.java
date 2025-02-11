@@ -45,6 +45,8 @@ public class Config {
                                 "/contact-us",
                                 "/blog",
                                 "/api/subscription/**",
+                                "/api/histories/submit-comment/**",
+                                "/api/histories/submit-comment",
                                 "/blog/images/**",
                                 "/api/contactus",
                                 "api/placeholder/**",

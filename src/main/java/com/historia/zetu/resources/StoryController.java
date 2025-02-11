@@ -137,15 +137,18 @@ public class StoryController {
 
     @PostMapping("/submit-comment")
     public ResponseEntity<HttpResponse> postComment(
+            @RequestParam("historyId") long historyId,
             @RequestParam("commentContent") String content,
             @RequestParam("commentAuthor") String author,
             @RequestParam("commenterEmail") String email,
             @RequestParam(value = "parentCommentId", required = false) Long parentCommentId) {
 
+        Story history = historyService.getHistoryById(historyId);
         Comments newComment = new Comments();
         newComment.setCommentContent(content);;
         newComment.setCommenterEmail(email);
         newComment.setCommentDate(LocalDateTime.now());
+        newComment.setHistory(history);
 
         log.info("Received commentContent: " + content);
         log.info("Received commentAuthor: " + author);
@@ -157,12 +160,12 @@ public class StoryController {
             newComment.setParentComment(parentComment);
         }
 
-        boolean result = commentService.saveComment(newComment);
-        if (result) {
+        List<Comments> freshComments = commentService.saveComment(newComment,historyId);
+        if (!freshComments.isEmpty()) {
             return created(URI.create("")).body(
                     HttpResponse.builder()
                             .timesStamp(LocalDateTime.now().toString())
-                            .data(Map.of("historys", result))
+                            .data(Map.of("comments", freshComments))
                             .message("")
                             .status(HttpStatus.CREATED)
                             .statusCode(HttpStatus.CREATED.value())
@@ -289,19 +292,6 @@ public class StoryController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An error occurred while processing your like/unlike request.");
         }
-    }
-
-    @PostMapping
-    public ResponseEntity<Comments> postComment(@RequestBody Comments commentDto) {
-        commentDto.setCommentContent(commentDto.getCommentContent());
-        commentDto.setCommenterEmail(commentDto.getCommenterEmail());
-        commentDto.setCommentDate(LocalDateTime.now());
-        commentDto.setHistory(commentDto.getHistory());
-        // Call the service to save the comment
-        Comments savedComment = comments.(commentDto);
-
-        // Return the saved comment as a response
-        return ResponseEntity.ok(savedComment);
     }
 
 

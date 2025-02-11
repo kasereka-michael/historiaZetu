@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface CommentsRepo extends JpaRepository<Comments, Long> {
     List<Comments> findAllByParentCommentIsNull();
+
+    List<Comments> findAllByHistory_HistoryIdAndCommentId(long historyId, Long commentId);
 }

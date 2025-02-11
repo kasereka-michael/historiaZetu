@@ -316,42 +316,66 @@ p {
     border: none;
 
 }
-.comment-box {
-    margin-bottom: 20px;
+
+
+/* --- Comment Box and Comments List Styling --- */
+.comment-container {
+    max-width: 750px;
+    margin: auto;
 }
-.comment-box textarea {
-    width: 100%;
-    height: 100px;
+.comment {
+    background-color: #242526;
+    border-radius: 8px;
     padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
     margin-bottom: 10px;
-    resize: vertical;
+    position: relative;
 }
-.comment-box button {
-    padding: 10px 20px;
-    background: #2a5555;
-    color: #fff;
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #B0B3B8;
+}
+.comment-content {
+    margin-top: 5px;
+}
+.reply-link {
+    color: #0c5460;
+    cursor: pointer;
+    font-size: 13px;
+}
+.reply-container {
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: 2px solid #3A3B3C;
+}
+.comment-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
     border: none;
+    background-color: #3A3B3C;
+    color: white;
+}
+.btn-post {
+    background-color: #0c5460;
+    color: white;
+    border: none;
+    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
 }
-.comments-list {
-    border-top: 1px solid #ddd;
-    padding-top: 10px;
+.btn-post:hover {
+    background-color: rgba(12, 84, 96, 0.77);
 }
-.comment {
-    margin-bottom: 20px;
-}
-.comment-author {
-    font-weight: bold;
-}
-.comment-text {
-    margin: 5px 0;
-}
-.comment-date {
-    font-size: 0.8em;
-    color: #777;
+/* --- Responsive Styles --- */
+@media screen and (max-width: 600px) {
+    .comment-box, .comments-list {
+        margin: 10px;
+    }
+    .comment {
+        padding: 8px;
+    }
 }
 
 /* Responsive Design */

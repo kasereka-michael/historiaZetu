@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface CommentService {
 
-    boolean saveComment(Comments comment);
+    List<Comments> saveComment(Comments comment, long historyId);
 
     List<Comments> getAllComments();
 
     Comments getCommentById(Long commentId);
+
+    List<Comments> getHistoryCommentsById(long historyId, Long commentId);
 
     void updateComment(Comments comment);
     List<Comments> getAllTopLevelComments();

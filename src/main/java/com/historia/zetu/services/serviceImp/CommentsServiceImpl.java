@@ -18,9 +18,9 @@ public class CommentsServiceImpl implements CommentService {
     private final CommentsRepo commentsRepository;
 
     @Override
-    public boolean saveComment(Comments comment) {
-         commentsRepository.save(comment);
-        return true;
+    public List<Comments> saveComment(Comments comment,long historyId) {
+        Comments CommentSaved = commentsRepository.save(comment);
+        return getHistoryCommentsById(historyId, CommentSaved.getCommentId());
     }
 
     @Override
@@ -32,6 +32,15 @@ public class CommentsServiceImpl implements CommentService {
     public Comments getCommentById(Long commentId) {
         return commentsRepository.findById(commentId).orElseThrow();
     }
+
+    @Override
+    public List<Comments> getHistoryCommentsById(long historyId, Long commentId) {
+        return commentsRepository.findAllByHistory_HistoryIdAndCommentId(historyId, commentId);
+    }
+
+
+
+
 
     @Override
     public void updateComment(Comments comment) {
