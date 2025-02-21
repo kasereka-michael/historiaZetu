@@ -232,82 +232,122 @@
 
         $('.story-container').html(container);
 
-        function splitContentIntoSlides(content, maxLines = 5, fontSize = "16px") {
-            let tempDiv = document.createElement("div");
+        function computeMaxLines() {
+            const screenHeight = window.innerHeight;
+            if (screenHeight >= 1200) {
+                return 6;
+            } else if (screenHeight >= 800) {
+                return 5;
+            } else if (screenHeight >= 600) {
+                return 4;
+            } else {
+                return 3;
+            }
+        }
+
+        function splitContentIntoSlides(content, maxLines = null, fontSize = "16px") {
+            // Use dynamic maxLines if none provided.
+            if (maxLines === null) {
+                maxLines = computeMaxLines();
+            }
+
+            // Create a temporary container to render the incoming HTML content.
+            const tempDiv = document.createElement("div");
             tempDiv.innerHTML = content;
-            document.body.appendChild(tempDiv);
+            tempDiv.style.fontSize = fontSize;
+            tempDiv.style.lineHeight = "1.5";
             tempDiv.style.visibility = "hidden";
             tempDiv.style.position = "absolute";
-            tempDiv.style.width = "80%"; // Ensure width matches actual rendering
-            tempDiv.style.lineHeight = "1.5"; // Normal line-height for text
+            tempDiv.style.width = "80%";
+            document.body.appendChild(tempDiv);
+
+            // Compute the base line height from the computed style.
+            const computedLineHeight = parseFloat(getComputedStyle(tempDiv).lineHeight);
+            const maxHeight = maxLines * computedLineHeight;
+
+            // Create a hidden container to assemble slides for measurement.
+            const measureContainer = document.createElement("div");
+            measureContainer.style.visibility = "hidden";
+            measureContainer.style.position = "absolute";
+            measureContainer.style.width = "80%";
+            document.body.appendChild(measureContainer);
 
             let slides = [];
             let currentSlide = document.createElement("div");
             currentSlide.className = "slide-content";
-            let currentHeight = 0;
+            measureContainer.appendChild(currentSlide);
 
-            // Get the computed line height of the content
-            let lineHeight = parseFloat(getComputedStyle(tempDiv).lineHeight); // Use actual line height
-            let maxHeight = maxLines * lineHeight; // Set maxHeight for slide
-
-            // Helper function to push the current slide and reset it
+            // Helper: Finalize the current slide and start a new one.
             function pushSlide() {
-                if (currentSlide.children.length > 0) {
+                if (currentSlide.childNodes.length > 0) {
                     slides.push(currentSlide.outerHTML);
+                    measureContainer.removeChild(currentSlide);
                     currentSlide = document.createElement("div");
                     currentSlide.className = "slide-content";
+                    measureContainer.appendChild(currentSlide);
                 }
             }
 
+            // Process each node in the temporary content container.
             Array.from(tempDiv.childNodes).forEach(node => {
-                if (node.nodeType === Node.ELEMENT_NODE || node.nodeType === Node.TEXT_NODE) {
-                    // Create corresponding element based on node type
-                    let element = document.createElement(node.nodeType === Node.TEXT_NODE ? "p" : node.tagName);
-                    element.innerHTML = node.nodeType === Node.TEXT_NODE ? node.textContent.trim() : node.innerHTML;
-                    element.style.textAlign = "justify"; // Justify the text
-                    element.style.fontSize = fontSize; // Apply the font size change
-
-                    // If it's a title (like h1, h2), we check if it fits within the slide
-                    if (node.tagName && node.tagName.toLowerCase().startsWith('h')) {
-                        // Check if adding the title would exceed the slide height
-                        let titleHeight = lineHeight * 2; // Assume title takes more space than text
-                        let newHeight = currentHeight + titleHeight;
-
-                        if (newHeight > maxHeight) {
-                            pushSlide(); // If exceeded, push current slide before adding the title
-                            currentHeight = titleHeight; // Reset current height for title
-                        } else {
-                            currentHeight += titleHeight; // Add title height to the current slide
-                        }
-
-                        currentSlide.appendChild(element); // Append the title
-                        return; // Skip the normal content handling for titles
-                    }
-
-                    // Check if adding the element would exceed the height of the current slide
-                    let newHeight = currentHeight + lineHeight; // Add the normal line height for text
-                    if (newHeight > maxHeight) {
-                        pushSlide(); // If exceeded, push the current slide and start a new one
-                        currentHeight = lineHeight; // Reset height for new slide
-                    }
-
-                    // Append the element to the current slide
-                    currentSlide.appendChild(element);
-                    currentHeight += lineHeight;
+                // Handle image nodes separately – they get their own centered slide.
+                if (
+                    node.nodeType === Node.ELEMENT_NODE &&
+                    node.tagName.toLowerCase() === "img"
+                ) {
+                    pushSlide();
+                    let imgSlide = document.createElement("div");
+                    imgSlide.className = "slide-content";
+                    imgSlide.style.textAlign = "center";
+                    imgSlide.appendChild(node.cloneNode(true));
+                    slides.push(imgSlide.outerHTML);
+                    return; // Skip further processing for this node.
                 }
 
-                // Handle images by centering them and placing them in their own slide
-                if (node.tagName === 'IMG') {
-                    pushSlide(); // Push the current slide before adding the image
-                    // Create a div to center the image and push it as its own slide
-                    slides.push(`<div class="slide-content" style="text-align: center;">${node.outerHTML}</div>`);
+                // Skip empty text nodes.
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() === "") {
+                    return;
+                }
+
+                // For text and other element nodes, create a new element.
+                const tag = (node.nodeType === Node.TEXT_NODE) ? "p" : node.tagName.toLowerCase();
+                const element = document.createElement(tag);
+                if (node.nodeType === Node.TEXT_NODE) {
+                    element.textContent = node.textContent.trim();
+                } else {
+                    element.innerHTML = node.innerHTML;
+                }
+                element.style.textAlign = "justify";
+                element.style.fontSize = fontSize;
+                element.style.lineHeight = "1.5";
+
+                // Special handling for headings.
+                if (
+                    node.nodeType === Node.ELEMENT_NODE &&
+                    node.tagName.toLowerCase().startsWith("h")
+                ) {
+                    element.style.fontWeight = "bold";
+                }
+
+                // Append the element to the current slide.
+                currentSlide.appendChild(element);
+                // If the slide exceeds the maximum allowed height, move the element to a new slide.
+                if (currentSlide.getBoundingClientRect().height > maxHeight) {
+                    currentSlide.removeChild(element);
+                    pushSlide();
+                    currentSlide.appendChild(element);
                 }
             });
 
-            // Push the last slide if it contains any content
-            pushSlide();
+            // Push the final slide if it contains any content.
+            if (currentSlide.childNodes.length > 0) {
+                slides.push(currentSlide.outerHTML);
+            }
 
+            // Clean up temporary containers.
             document.body.removeChild(tempDiv);
+            document.body.removeChild(measureContainer);
+
             return slides;
         }
 
