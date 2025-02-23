@@ -76,3 +76,15 @@ p {
 .container-contact-us{
     margin-top: 5rem;
 }
+@media (max-width: 768px) {
+    .navbar{
+        background-color: #131313 !important;
+    }
+}
+
+/* Media query for extra small devices (phones) */
+@media (max-width: 480px) {
+    .navbar{
+        background-color: #131313 !important;
+    }
+}

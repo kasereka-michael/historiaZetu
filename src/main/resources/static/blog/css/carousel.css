@@ -63,7 +63,7 @@ canvas {
 @media (max-width: 768px) {
     .carousel-item {
         height: 100dvh;
-        margin-top: 10px;/* Adjust height for smaller screens */
+        margin-top: 10rem;/* Adjust height for smaller screens */
     }
 
 }
@@ -72,7 +72,7 @@ canvas {
 @media (max-width: 480px) {
     .carousel-item {
         height: 50vh;
-        margin-top: 5px;/* Further reduce the height for very small screens */
+        margin-top: 10rem;/* Further reduce the height for very small screens */
     }
 }
 
